@@ -10,7 +10,7 @@
  * @since   0.0.1
  */
 class Speckle {
-	
+
 	/**
 	 * Constructor.
 	 *
@@ -99,18 +99,19 @@ class Speckle {
 	}
 
 	/**
-	 * Get the container element's dimensions.
+	 * Get the container element's dimensions and position.
 	 *
 	 * @since  0.0.1
 	 * @param  {Element} element The element to get the dimensions for.
-	 * @return {object}          The dimensions object containing width, height, and CSS position.
+	 * @return {object}          The element data object containing width, height, and CSS position.
 	 */
-	getElementDimensions(element) {
-		const dimensions = element.getBoundingClientRect();
+	getElementData(element) {
+		const { width, height } = element.getBoundingClientRect();
+		const { position } = window.getComputedStyle(element);
 		return {
-			width: dimensions.width, 
-			height: dimensions.height, 
-			position: element.style.position, 
+			width: width, 
+			height: height, 
+			position: position, 
 		};
 	}
 
@@ -122,7 +123,7 @@ class Speckle {
 	 * @return {void} 
 	 */
 	render(element) {
-		const { width, height, position } = this.getElementDimensions(element);
+		const { width, height, position } = this.getElementData(element);
 		console.log(width, height, position);
 	}
 

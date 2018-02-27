@@ -27,9 +27,6 @@ class Speckle {
 		}
 		// Set the default arguments.
 		this.defaultOptions = {
-			isBokeh: false, // bokeh effect (blur as a factor of distance)
-			isRainbow: true, // randomize color
-			color: '', // color if rainbow is false (hex, rgb, hsl, keyword)
 			quantity: 50, // quantity of speckles
 			minSize: 5, // smallest speckle (1+, less than `maxSize`)
 			maxSize: 50, // largest speckle (1+, greater than `minSize`)
@@ -37,9 +34,12 @@ class Speckle {
 			lrOffset: 50,  // left/right offset (0+, px)
 			minOpacity: 10, // minimum opacity (1-100)
 			maxOpacity: 90, // maximum opacity (1-100)
+			isBokeh: false, // bokeh effect (blur as a factor of distance)
+			isRainbow: true, // randomize color
+			color: '', // color if rainbow is false (hex, rgb, hsl, keyword)
 			zIndex: 500, // z-index (bokeh: the starting z-index)
 			isCropped: false, // apply `overflow: hidden;` to the container
-			attributes: null // speckle classes (space separated)
+			attributes: null // attributes object as `key: value` pairs
 		};
 		// Set the global styles.
 		this.globalStyles = {
@@ -48,6 +48,8 @@ class Speckle {
 			pointerEvents: 'none', 
 			position: 'absolute', 
 		};
+		// Set the upgraded class.
+		this.upgradedClass = 'speckle--upgraded';
 		// Render speckles.
 		this.render(element);
 	}
@@ -116,6 +118,26 @@ class Speckle {
 	}
 
 	/**
+	 * Add a class to an element.
+	 * 
+	 * @param {Element}  element    The element to add classes to.
+	 * @param {string}   className  The classes to add to the passed element.
+	 */
+	addClass(element, className) {
+		element.classList.add(className);
+	}
+
+	/**
+	 * Remove a class from an element.
+	 * 
+	 * @param {Element}  element    The element to remove classes from.
+	 * @param {string}   className  The classes to remove from the passed element.
+	 */
+	removeClass(element, className) {
+		element.classList.remove(className);
+	}
+
+	/**
 	 * Render the speckles.
 	 * 
 	 * @since  0.0.1
@@ -124,7 +146,8 @@ class Speckle {
 	 */
 	render(element) {
 		const { width, height, position } = this.getElementData(element);
-		console.log(width, height, position);
+		// add the upgraded class.
+		this.addClass(element, this.upgradedClass);
 	}
 
 }

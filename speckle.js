@@ -39,6 +39,7 @@ class Speckle {
 			color: '', // color if rainbow is false (hex, rgb, hsl, keyword)
 			zIndex: 500, // z-index (bokeh: the starting z-index)
 			isCropped: false, // apply `overflow: hidden;` to the container
+			tagName: 'I', // the Tag Name that the speckle should be rendered as
 			attributes: null // attributes object as `key: value` pairs
 		};
 		// Parse and set options.
@@ -113,7 +114,7 @@ class Speckle {
 	 * @return {int}       The randomized integer.
 	 */
 	getRandomInt(min, max) {
-		return Math.floor(Math.random() * (max - min + 1) + min);
+		return Math.floor(Math.random() * ((max - min) + 1) + min);
 	}
 
 	/**
@@ -171,7 +172,7 @@ class Speckle {
 	 * @return {void} 
 	 */
 	render(element) {
-		const { quantity, minSize, maxSize, tbOffset, lrOffset, minOpacity, maxOpactiy, isRainbow, color, isBokeh, zIndex, isCropped, attributes } = this.options;
+		const { quantity, minSize, maxSize, tbOffset, lrOffset, minOpacity, maxOpacity, isRainbow, color, isBokeh, zIndex, isCropped, tagName, attributes } = this.options;
 		const { width, height, position } = this.getElementData(element);
 		// add the upgraded class.
 		this.addClass(element, this.upgradedClass);
@@ -179,6 +180,68 @@ class Speckle {
 		// is not already `relative`, `fixed`, or `absolute`.
 		if (['relative, absolute, fixed'].indexOf(position) === -1) {
 			element.style.position = 'relative';
+		}
+		// Add `overflow: hidden;` to element if `isCropped` is `true`.
+		if (isCropped) {
+			element.style.overflow = 'hidden';
+		}
+		// render speckles according to quantity.
+		for (var i = 1; i <= quantity; i++) {
+			// size
+			const size = this.getRandomInt(minSize, maxSize);
+			const center = (size / 2);
+			// top
+			const minTop = ((0 - tbOffset) - center);
+			const maxTop = ((height + tbOffset) - center);
+			const top = this.getRandomInt(minTop, maxTop);
+			// left
+			const minLeft = (( 0 - lrOffset ) - center);
+			const maxLeft = ((width + lrOffset) - center);
+			const left = this.getRandomInt(minLeft, maxLeft);
+			// color
+			var renderColor = color;
+			if (isRainbow) {
+				renderColor = this.getRandomHex();
+			} 
+			// z-index
+			var renderZIndex = zIndex;
+			// box shadow
+			var boxShadow = '';
+			// bokeh
+			if (isBokeh) {
+				boxShadow = '0 0 ' + (size / 3) + 'px ' + (size / 3) + 'px ' + color;
+				zIndex = (zIndex + size);
+			} 
+			// opacity
+			var opacity = (this.getRandomInt(minOpacity, maxOpacity) * 0.01);
+			// Create speckle element according to the `tagName` option.
+			const speckle = document.createElement(tagName);
+			// Set the index of this attribute as `data-speckle-index` 
+			// incase it needs to be accessed by other scripts.
+			speckle.setAttribute('data-speckle-index', i);
+			// Add styles to the speckle.
+			var styles = Object.assign(this.globalStyles, {
+				backgroundColor: renderColor, 
+				boxShadow: boxShadow, 
+				height: size + 'px', 
+				left: left + 'px', 
+				opacity: opacity, 
+				top: top + 'px', 
+				width: size + 'px', 
+				zIndex: renderZIndex, 
+			});
+			// loop over the speckle style object keys and apply the styles.
+			for (var styleKey in styles) {
+				speckle.style[styleKey] = styles[styleKey];
+			}
+			// Add the custom attributes to the speckle.
+			if (attributes && typeof attributes === 'object') {
+				for (var attributeKey in attributes) {
+					speckle.setAttribute(attributeKey, attributes[attributeKey]);
+				}
+			}
+			// Append the speckle to the container element.
+			element.appendChild(speckle);
 		}
 	}
 

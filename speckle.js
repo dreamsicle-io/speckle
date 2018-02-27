@@ -9,7 +9,7 @@ class Speckle {
 		// throw error if `element` is not a valid HTML element.
 		// See: this.isElement().
 		if (! element || ! this.isElement(element)) {
-			throw new Error('A valid HTML Element must be passed to the constructor as the first argument.');
+			this.throwElementError();
 		}
 		// Prepare the default arguments.
 		this.defaultArgs = {
@@ -40,6 +40,13 @@ class Speckle {
 
 	isElement(element) {
 	    return element instanceof Element;  
+	}
+
+	throwElementError() {
+		throw new Error(
+			'Speckle.js\n' + 
+			'A valid HTML Element must be passed to the constructor as the first argument.'
+		)
 	}
 
 	getRandomInt(min, max) {

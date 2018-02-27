@@ -1,10 +1,24 @@
 'use-strict';
 
 /**
- * Speckle
+ * Speckle.js
+ *
+ * A Javascript plugin that adds stylized speckles 
+ * to any element, with no dependencies.
+ *
+ * @package speckle
+ * @since   0.0.1
  */
 class Speckle {
-
+	
+	/**
+	 * Constructor.
+	 *
+	 * @since  0.0.1
+	 * @param  {Element} element The passed element to speckle.
+	 * @param  {object} options The options object.
+	 * @return {void} 
+	 */
 	constructor(element, options) {
 		// throw error if `element` is not a valid HTML element.
 		// See: this.isElement().
@@ -38,10 +52,23 @@ class Speckle {
 		this.render(element);
 	}
 
+	/**
+	 * Check if something is a valid HTML element.
+	 * 
+	 * @since  0.0.1
+	 * @param  {mixed}   element What to check.
+	 * @return {Boolean}         If the element is a valid HTML element or not.
+	 */
 	isElement(element) {
 	    return element instanceof Element;  
 	}
 
+	/**
+	 * Throw an element error.
+	 * 
+	 * @since  0.0.1
+	 * @return {Error} The formatted element error.
+	 */
 	throwElementError() {
 		throw new Error(
 			'Speckle.js\n' + 
@@ -49,15 +76,36 @@ class Speckle {
 		)
 	}
 
+	/**
+	 * Get a random integer between a passed minimum and maximum.
+	 * 
+	 * @since  0.0.1
+	 * @param  {int} min The minimum for the returned integer.
+	 * @param  {int} max The maximum for the returned integer.
+	 * @return {int}     The randomized integer.
+	 */
 	getRandomInt(min, max) {
 		return Math.floor(Math.random() * (max - min + 1) + min);
 	}
 
+	/**
+	 * Get a random hex color.
+	 * 
+	 * @since  0.0.1
+	 * @return {string} A random hex color.
+	 */
 	getRandomHex() {
 		return '#' + (Math.random().toString(16).slice(2, 8) + '000000').slice(-6).toUpperCase();
 	}
 
-	getDimensions(element) {
+	/**
+	 * Get the container element's dimensions.
+	 *
+	 * @since  0.0.1
+	 * @param  {Element} element The element to get the dimensions for.
+	 * @return {object}          The dimensions object containing width, height, and CSS position.
+	 */
+	getElementDimensions(element) {
 		const dimensions = element.getBoundingClientRect();
 		return {
 			width: dimensions.width, 
@@ -66,8 +114,15 @@ class Speckle {
 		};
 	}
 
+	/**
+	 * Render the speckles.
+	 * 
+	 * @since  0.0.1
+	 * @param  {Element} element The container element to speckle.
+	 * @return {void} 
+	 */
 	render(element) {
-		const { width, height, position } = this.getDimensions(element);
+		const { width, height, position } = this.getElementDimensions(element);
 		console.log(width, height, position);
 	}
 

@@ -25,7 +25,7 @@ class Speckle {
 		if (! element || ! this.isElement(element)) {
 			this.throwElementError();
 		}
-		// Set the default arguments.
+		// Set the default options.
 		this.defaultOptions = {
 			quantity: 50, // quantity of speckles
 			minSize: 5, // smallest speckle (1+, less than `maxSize`)
@@ -41,6 +41,8 @@ class Speckle {
 			isCropped: false, // apply `overflow: hidden;` to the container
 			attributes: null // attributes object as `key: value` pairs
 		};
+		// Parse and set options.
+		this.options = this.parseOptions(options, this.defaultOptions);
 		// Set the global styles.
 		this.globalStyles = {
 			borderRadius: '50%', 
@@ -52,6 +54,30 @@ class Speckle {
 		this.upgradedClass = 'speckle--upgraded';
 		// Render speckles.
 		this.render(element);
+	}
+
+	/**
+	 * Parse the passed options against the defaults.
+	 * 
+	 * @param  {obj}  options         The passed in user options object.
+	 * @param  {obj}  defaultOptions  The default options object.
+	 * @return {obj}                  The parsed options object.
+	 */
+	parseOptions(options, defaultOptions) {
+		// if no options are passed, just return the default options.
+		if (! options || typeof options !== 'object') {
+			return defaultOptions;
+		}
+		// init empty `parsedOptions` object.
+		var parsedOptions = {};
+		// loop default option keys and parse. If the options 
+		// object has this key, use it; else, use the default option.
+		for (var key in defaultOptions) {
+			parsedOptions[key] = options[key] || defaultOptions[key];
+		}
+		// return the parsed options.
+		return parsedOptions;
+
 	}
 
 	/**
@@ -145,9 +171,15 @@ class Speckle {
 	 * @return {void} 
 	 */
 	render(element) {
+		const { quantity, minSize, maxSize, tbOffset, lrOffset, minOpacity, maxOpactiy, isRainbow, color, isBokeh, zIndex, isCropped, attributes } = this.options;
 		const { width, height, position } = this.getElementData(element);
 		// add the upgraded class.
 		this.addClass(element, this.upgradedClass);
+		// add relative positioning to the element if it 
+		// is not already `relative`, `fixed`, or `absolute`.
+		if (['relative, absolute, fixed'].indexOf(position) === -1) {
+			element.style.position = 'relative';
+		}
 	}
 
 }

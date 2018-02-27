@@ -13,19 +13,19 @@ class Speckle {
 		}
 		// Prepare the default arguments.
 		this.defaultArgs = {
-			boca: false, // boca lights (blur as factor of distance)
-			color: null, // color if rainbow is false
-			rainbow: true, // randomize color
+			isBokeh: false, // bokeh effect (blur as a factor of distance)
+			isRainbow: true, // randomize color
+			color: '', // color if rainbow is false (hex, rgb, hsl, keyword)
 			quantity: 50, // quantity of speckles
-			minSize: 5, // smallest speckle
-			maxSize: 50, // largest speckle
-			tbOffset: 50, // top,bottom offset
-			lrOffset: 50,  // left,right offset
+			minSize: 5, // smallest speckle (1+, less than `maxSize`)
+			maxSize: 50, // largest speckle (1+, greater than `minSize`)
+			tbOffset: 50, // top/bottom offset (0+, px)
+			lrOffset: 50,  // left/right offset (0+, px)
 			minOpacity: 10, // minimum opacity (1-100)
 			maxOpacity: 90, // maximum opacity (1-100)
-			zIndex: 500, // z-index (boca: the starting z-index)
-			crop: false, // apply overflow:hidden to container
-			classes: '' // speckle classes (space separated)
+			zIndex: 500, // z-index (bokeh: the starting z-index)
+			isCropped: false, // apply `overflow: hidden;` to the container
+			attributes: null // speckle classes (space separated)
 		};
 		// Prepare the global styles.
 		this.globalStyles = {

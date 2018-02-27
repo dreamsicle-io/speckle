@@ -1,0 +1,23 @@
+body {
+  position: relative;
+}
+
+.speckle-demo {
+  margin: 80px auto 500px;
+  background-color: #e7e7e7;
+  width: 600px;
+  height: 300px;
+}
+
+.speckle-demo h3 {
+  font-family: sans-serif;
+  display: inline-block;
+  margin: 15px;
+  padding: 10px 15px;
+  line-height: 1;
+  border-radius: 20px;
+  background-color: #999999;
+  color: #ffffff;
+  position: relative;
+  z-index: 9999;
+}

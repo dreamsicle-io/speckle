@@ -15,17 +15,17 @@ class Speckle {
 	 * Constructor.
 	 *
 	 * @since  0.0.1
-	 * @param  {Element} element The passed element to speckle.
-	 * @param  {obj} options The options object.
+	 * @param  {Element}  element  The passed element to speckle.
+	 * @param  {obj}      options  The options object.
 	 * @return {void} 
 	 */
 	constructor(element, options) {
 		// throw error if `element` is not a valid HTML element.
-		// See: this.isElement().
+		// See: `this.isElement()`.
 		if (! element || ! this.isElement(element)) {
 			this.throwElementError();
 		}
-		// Prepare the default arguments.
+		// Set the default arguments.
 		this.defaultArgs = {
 			isBokeh: false, // bokeh effect (blur as a factor of distance)
 			isRainbow: true, // randomize color
@@ -41,7 +41,7 @@ class Speckle {
 			isCropped: false, // apply `overflow: hidden;` to the container
 			attributes: null // speckle classes (space separated)
 		};
-		// Prepare the global styles.
+		// Set the global styles.
 		this.globalStyles = {
 			borderRadius: '50%', 
 			display: 'block', 
@@ -56,8 +56,8 @@ class Speckle {
 	 * Check if something is a valid HTML element.
 	 * 
 	 * @since  0.0.1
-	 * @param  {mixed}   element What to check.
-	 * @return {Boolean}         If the element is a valid HTML element or not.
+	 * @param  {mixed}    element  What to check.
+	 * @return {Boolean}           If the element is a valid HTML element or not.
 	 */
 	isElement(element) {
 	    return element instanceof Element;  
@@ -67,7 +67,7 @@ class Speckle {
 	 * Throw an element error.
 	 * 
 	 * @since  0.0.1
-	 * @return {Error} The formatted element error.
+	 * @return {Error}  The formatted element error.
 	 */
 	throwElementError() {
 		throw new Error(
@@ -80,9 +80,9 @@ class Speckle {
 	 * Get a random integer between a passed minimum and maximum.
 	 * 
 	 * @since  0.0.1
-	 * @param  {int} min The minimum for the returned integer.
-	 * @param  {int} max The maximum for the returned integer.
-	 * @return {int}     The randomized integer.
+	 * @param  {int}  min  The minimum for the returned integer.
+	 * @param  {int}  max  The maximum for the returned integer.
+	 * @return {int}       The randomized integer.
 	 */
 	getRandomInt(min, max) {
 		return Math.floor(Math.random() * (max - min + 1) + min);
@@ -92,7 +92,7 @@ class Speckle {
 	 * Get a random hex color.
 	 * 
 	 * @since  0.0.1
-	 * @return {string} A random hex color.
+	 * @return {string}  A random hex color.
 	 */
 	getRandomHex() {
 		return '#' + (Math.random().toString(16).slice(2, 8) + '000000').slice(-6).toUpperCase();
@@ -102,8 +102,8 @@ class Speckle {
 	 * Get the container element's dimensions and position.
 	 *
 	 * @since  0.0.1
-	 * @param  {Element} element The element to get the dimensions for.
-	 * @return {obj}          The element data object containing width, height, and CSS position.
+	 * @param  {Element}  element  The element to get the dimensions for.
+	 * @return {obj}               The element data object containing width, height, and CSS position.
 	 */
 	getElementData(element) {
 		const { width, height } = element.getBoundingClientRect();
@@ -119,7 +119,7 @@ class Speckle {
 	 * Render the speckles.
 	 * 
 	 * @since  0.0.1
-	 * @param  {Element} element The container element to speckle.
+	 * @param  {Element}  element  The container element to speckle.
 	 * @return {void} 
 	 */
 	render(element) {

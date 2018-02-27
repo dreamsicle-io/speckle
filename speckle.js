@@ -26,7 +26,7 @@ class Speckle {
 			this.throwElementError();
 		}
 		// Set the default arguments.
-		this.defaultArgs = {
+		this.defaultOptions = {
 			isBokeh: false, // bokeh effect (blur as a factor of distance)
 			isRainbow: true, // randomize color
 			color: '', // color if rainbow is false (hex, rgb, hsl, keyword)

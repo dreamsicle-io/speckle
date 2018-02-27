@@ -124,7 +124,7 @@ class Speckle {
 	 * @return {string}  A random hex color.
 	 */
 	getRandomHex() {
-		return '#' + (Math.random().toString(16).slice(2, 8) + '000000').slice(-6).toUpperCase();
+		return '#' + ('000000' + Math.random().toString(16).slice(2, 8)).slice(-6).toUpperCase();
 	}
 
 	/**

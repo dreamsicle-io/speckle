@@ -3,7 +3,7 @@
 /**
  * Speckle.js
  *
- * A Javascript plugin that adds stylized speckles 
+ * A JavaScript module that adds stylized speckles 
  * to any element, with no dependencies.
  *
  * @package speckle

@@ -1,3 +1,9 @@
+// primary
+$color--primary: #191970;
+$color--text-on-primary: #ffffff;
+// secondary
+$color--secondary: #ff9af3;
+$color--text-on-secondary: #191970;
 // light
 $color--light: #ffffff;
 $color--light-dark: #e7e7e7;
@@ -8,3 +14,10 @@ $color--dark: #3c3c3c;
 $color--dark-light: #999999;
 $color--text-on-dark: #ffffff;
 $color--text-on-dark-light: #ffffff;
+// gradients
+$gradient--primary-to-secondary: linear-gradient(135deg, $color--primary 0%, $color--secondary 100%);
+$gradient--secondary-to-primary: linear-gradient(135deg, $color--secondary 0%, $color--primary 100%);
+// gutter
+$gutter--phone: 16px;
+$gutter--tablet: 24px;
+$gutter--desktop: 36px;

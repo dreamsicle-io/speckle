@@ -69,12 +69,14 @@ document.addEventListener('DOMContentLoaded', function(e) {
 	new Speckle(multiple, {
 		tbOffset: 96, 
 		lrOffset: 128, 
+		zIndex: 1, 
 	});
 	new Speckle(multiple, {
 		quantity: 4, 
 		minSize: 8, 
 		maxSize: 256, 
-		zIndex: 10
+		zIndex: 10, 
+		zIndex: 2, 
 	});
 	new Speckle(multiple, {
 		isBokeh: true,  
@@ -85,6 +87,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
 		lrOffset: 256,  
 		minOpacity: 25,  
 		maxOpacity: 50, 
-		zIndex: 4 
+		zIndex: 3,  
 	});
 });

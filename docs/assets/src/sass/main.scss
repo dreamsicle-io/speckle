@@ -1,31 +1,14 @@
-@import './mixins';
-@import './variables';
+// Import dependencies.
+@import 'normalize-css/normalize';
 
-body {
-	background-color: $color--light;
-	color: $color--text-on-light;
-	position: relative;
-}
+// Import variables and mixins.
+@import 'mixins';
+@import 'variables';
 
-.speckle-demo {
-	background-color: $color--light-dark;
-	color: $color--text-on-light-dark;
-	height: 300px;
-	margin: 80px auto 500px;
-	position: relative;
-	width: 600px;
-
-	h3 {
-		background-color: $color--dark-light;
-		border-radius: 20px;
-		color: $color--text-on-dark-light;
-		display: inline-block;
-		font-family: sans-serif;
-		line-height: 1;
-		margin: 15px;
-		padding: 10px 15px;
-		position: relative;
-		z-index: 9999;
-	}
-
-}
+// Import modules.
+@import 'modules/global';
+@import 'modules/masthead';
+@import 'modules/colophon';
+@import 'modules/section';
+@import 'modules/demo';
+@import 'modules/button';

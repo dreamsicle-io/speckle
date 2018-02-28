@@ -1,0 +1,38 @@
+// Clear fix
+// Add this to ::before and ::after pseudos
+// to clear their childrens' margins.
+@mixin clearfix {
+	clear: both;
+	content: '';
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+}
+
+// Clear fix
+// Add this to ::before and ::after pseudos
+// to clear their childrens' margins.
+@mixin contain($size: 'desktop') {
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: $gutter--phone;
+	padding-right: $gutter--phone;
+
+	@if ($size == 'phone') {
+		max-width: 460px;
+	} @elseif ($size == 'tablet') {
+		max-width: 768px;
+	} @else {
+		max-width: 1200px;
+	}
+
+	@media screen and (min-width: 768px) {
+		padding-left: $gutter--tablet;
+		padding-right: $gutter--tablet;
+	}
+
+	@media screen and (min-width: 1200px) {
+		padding-left: $gutter--desktop;
+		padding-right: $gutter--desktop;
+	}
+}

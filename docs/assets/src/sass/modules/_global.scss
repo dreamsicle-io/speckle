@@ -1,0 +1,35 @@
+body {
+	background-color: $color--light;
+	color: $color--text-on-light;
+	font-family: 'futura-pt', sans-serif;
+	position: relative;
+}
+
+em {
+	color: $color--secondary;
+	font-family: 'Times New Roman', serif;
+	font-weight: bold;
+}
+
+code {
+	background-color: $color--light-dark;
+	color: $color--text-on-light-dark;
+	cursor: text;
+	padding: 0.1em 0.4em;
+}
+
+table {
+	background-color: $color--light;
+	border: 1px solid $color--light-dark;
+	color: $color--text-on-light;
+
+	th {
+		padding: 16px;
+		text-align: left;
+	}
+
+	td {
+		border-top: 1px solid $color--light-dark;
+		padding: 8px 12px;
+	}
+}

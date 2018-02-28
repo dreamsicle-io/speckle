@@ -1,0 +1,26 @@
+.speckle-section {
+	padding-bottom: 80px;
+	padding-top: 40px;
+
+	&__inner {
+		@include contain('desktop');
+		max-width: 960px;
+	}
+
+	@media screen and (min-width: 768px) {
+		padding-bottom: 96px;
+		padding-top: 64px;
+	}
+
+	&__title {
+		color: $color--primary;
+		display: inline-block;
+		font-size: 36px;
+		font-weight: bold;
+	}
+
+	&--options {
+		background: $gradient--secondary-to-primary;
+	}
+
+}

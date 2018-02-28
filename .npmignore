@@ -1,0 +1,15 @@
+# See https://docs.npmjs.com/misc/developers#keeping-files-out-of-your-package for more about ignoring files.
+
+# Dependencies
+/node_modules
+
+# Docs
+index.html
+demo.css
+demo.js
+
+# Logs
+*.log
+
+# Misc
+.DS_Store

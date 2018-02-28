@@ -3,8 +3,9 @@
 	color: $color--text-on-light-dark;
 	height: 300px;
 	margin: 80px auto 500px;
+	max-width: 600px;
 	position: relative;
-	width: 600px;
+	width: 100%;
 
 	h3 {
 		background-color: $color--dark-light;

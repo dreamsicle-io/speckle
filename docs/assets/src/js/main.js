@@ -145,6 +145,39 @@ function initExampleSpeckles() {
 		maxOpacity: 50, 
 		zIndex: 3, 
 	});
+	// Space
+	const space = document.querySelector('#space');
+	new Speckle(space, {
+		quantity: 36, 
+		tbOffset: 6, 
+		lrOffset: 6, 
+		minSize: 2,
+		maxSize: 6,
+		minOpacity: 64, 
+		maxOpacity: 87.5, 
+		isCropped: true, 
+		zIndex: 2, 
+	});
+	new Speckle(space, {
+		quantity: 128, 
+		color: '#ffffff', 
+		tbOffset: 6, 
+		lrOffset: 6, 
+		minSize: 2,
+		maxSize: 6,
+		minOpacity: 87.5, 
+		maxOpacity: 100, 
+		isCropped: true, 
+		zIndex: 0, 
+	});
+	// Cheese
+	new Speckle(document.querySelector('#cheese'), {
+		color: '#ffffff', 
+		minSize: 18,
+		maxSize: 64,
+		minOpacity: 100, 
+		maxOpacity: 100, 
+	});
 }
 
 document.addEventListener('DOMContentLoaded', function(e) {

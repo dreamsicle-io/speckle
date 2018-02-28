@@ -4,9 +4,12 @@
 /node_modules
 
 # Docs
-index.html
-demo.css
-demo.js
+/docs
+
+# Build
+gulpfile.js
+.sasslintrc
+.eslintrc
 
 # Logs
 *.log

@@ -21,7 +21,7 @@ class Speckle {
 	 */
 	constructor(element, options) {
 		// throw error if `element` is not a valid HTML element.
-		if (! element || ! element instanceof Element) {
+		if (! element || ! (element instanceof Element)) {
 			this.throwElementError();
 		}
 		// Set the default options.
@@ -89,7 +89,7 @@ class Speckle {
 		throw new Error(
 			'Speckle.js\n' + 
 			'A valid HTML Element must be passed to the constructor as the first argument.'
-		)
+		);
 	}
 
 	/**
@@ -189,3 +189,5 @@ class Speckle {
 	}
 
 }
+
+export default Speckle;

@@ -2,7 +2,62 @@
 
 import Speckle from '../../../../Speckle.js';
 
-document.addEventListener('DOMContentLoaded', function(e) {
+/**
+ * Initialize masthead speckles.
+ *
+ * @since  0.0.1
+ * @return {void} 
+ */
+function initMastheadSpeckles() {
+	// Layer 2
+	new Speckle(document.querySelector('.speckle-masthead'), {
+		quantity: 28, 
+		minSize: 4, 
+		maxSize: 64,
+		maxOpacity: 64, 
+		isCropped: true, 
+		zIndex: 5,
+	});
+	// Layer 1
+	new Speckle(document.querySelector('.speckle-masthead'), {
+		quantity: 8, 
+		minSize: 256, 
+		maxSize: 768,
+		maxOpacity: 74, 
+		isCropped: true, 
+		zIndex: 0,
+	});
+}
+
+/**
+ * Initialize masthead speckles.
+ *
+ * @since  0.0.1
+ * @return {void} 
+ */
+function initSectionTitleSpeckles() {
+	const titles = document.querySelectorAll('.speckle-section__title');
+	if (titles && (titles.length > 0)) {
+		titles.forEach((title, i) => {
+			new Speckle(title, {
+				quantity: 16, 
+				minSize: 4, 
+				maxSize: 18,
+				maxOpacity: 64, 
+				lrOffset: 64, 
+				tbOffset: 36, 
+			});
+		});
+	}
+}
+
+/**
+ * Initialize example speckles.
+ *
+ * @since  0.0.1
+ * @return {void} 
+ */
+function initExampleSpeckles() {
 	// Default
 	new Speckle(document.querySelector('#default'));
 	// Large
@@ -19,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 		minSize: 4, 
 		maxSize: 24, 
 		tbOffset: 64, 
-		lrOffset: 128,  
+		lrOffset: 128, 
 	});
 	// Mono
 	new Speckle(document.querySelector('#mono'), {
@@ -56,15 +111,15 @@ document.addEventListener('DOMContentLoaded', function(e) {
 	});
 	// Bokeh
 	new Speckle(document.querySelector('#bokeh'), {
-		isBokeh: true,  
-		color: '#67b0ff',  
-		quantity: 16,  
-		minSize: 8,  
-		maxSize: 128,  
-		tbOffset: 96,  
-		lrOffset: 256,  
-		minOpacity: 25,  
-		maxOpacity: 50,   
+		isBokeh: true, 
+		color: '#67b0ff', 
+		quantity: 16, 
+		minSize: 8, 
+		maxSize: 128, 
+		tbOffset: 96, 
+		lrOffset: 256, 
+		minOpacity: 25, 
+		maxOpacity: 50, 
 	});
 	// Multi
 	const multi = document.querySelector('#multi');
@@ -80,14 +135,20 @@ document.addEventListener('DOMContentLoaded', function(e) {
 		zIndex: 2, 
 	});
 	new Speckle(multi, {
-		isBokeh: true,  
-		quantity: 24,  
-		minSize: 8,  
-		maxSize: 128,  
-		tbOffset: 128,  
-		lrOffset: 256,  
-		minOpacity: 25,  
+		isBokeh: true, 
+		quantity: 24, 
+		minSize: 8, 
+		maxSize: 128, 
+		tbOffset: 128, 
+		lrOffset: 256, 
+		minOpacity: 25, 
 		maxOpacity: 50, 
-		zIndex: 3,  
+		zIndex: 3, 
 	});
+}
+
+document.addEventListener('DOMContentLoaded', function(e) {
+	initMastheadSpeckles();
+	initExampleSpeckles();
+	initSectionTitleSpeckles();
 });

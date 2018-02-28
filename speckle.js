@@ -21,22 +21,20 @@ class Speckle {
 	 */
 	constructor(element, options) {
 		// throw error if `element` is not a valid HTML element.
-		// See: `this.isElement()`.
-		if (! element || ! this.isElement(element)) {
+		if (! element || ! element instanceof Element) {
 			this.throwElementError();
 		}
 		// Set the default options.
 		this.defaultOptions = {
-			quantity: 50, // quantity of speckles
-			minSize: 5, // smallest speckle (1+, less than `maxSize`)
-			maxSize: 50, // largest speckle (1+, greater than `minSize`)
-			tbOffset: 50, // top/bottom offset (0+, px)
-			lrOffset: 50,  // left/right offset (0+, px)
-			minOpacity: 10, // minimum opacity (1-100)
-			maxOpacity: 90, // maximum opacity (1-100)
+			quantity: 56, // quantity of speckles
+			minSize: 4, // smallest speckle (1+, less than `maxSize`)
+			maxSize: 56, // largest speckle (1+, greater than `minSize`)
+			tbOffset: 56, // top/bottom offset (0+, px)
+			lrOffset: 56,  // left/right offset (0+, px)
+			minOpacity: 12.5, // minimum opacity (1-100)
+			maxOpacity: 87.5, // maximum opacity (1-100)
 			isBokeh: false, // bokeh effect (blur as a factor of distance)
-			isRainbow: true, // randomize color
-			color: '', // color if rainbow is false (hex, rgb, hsl, keyword)
+			color: '', // color (hex, rgb, hsl, keyword). If none, the colors will be randomized.
 			zIndex: 500, // z-index (bokeh: the starting z-index)
 			isCropped: false, // apply `overflow: hidden;` to the container
 			tagName: 'I', // the Tag Name that the speckle should be rendered as
@@ -82,17 +80,6 @@ class Speckle {
 	}
 
 	/**
-	 * Check if something is a valid HTML element.
-	 * 
-	 * @since  0.0.1
-	 * @param  {mixed}    element  What to check.
-	 * @return {Boolean}           If the element is a valid HTML element or not.
-	 */
-	isElement(element) {
-	    return element instanceof Element;  
-	}
-
-	/**
 	 * Throw an element error.
 	 * 
 	 * @since  0.0.1
@@ -127,41 +114,31 @@ class Speckle {
 		return '#' + ('000000' + Math.random().toString(16).slice(2, 8)).slice(-6).toUpperCase();
 	}
 
-	/**
-	 * Get the container element's dimensions and position.
-	 *
-	 * @since  0.0.1
-	 * @param  {Element}  element  The element to get the dimensions for.
-	 * @return {obj}               The element data object containing width, height, and CSS position.
-	 */
-	getElementData(element) {
+	getStyles(element) {
+		const { minSize, maxSize, tbOffset, lrOffset, minOpacity, maxOpacity, color, isBokeh, zIndex } = this.options;
 		const { width, height } = element.getBoundingClientRect();
-		const { position } = window.getComputedStyle(element);
-		return {
-			width: width, 
-			height: height, 
-			position: position, 
-		};
-	}
-
-	/**
-	 * Add a class to an element.
-	 * 
-	 * @param {Element}  element    The element to add classes to.
-	 * @param {string}   className  The classes to add to the passed element.
-	 */
-	addClass(element, className) {
-		element.classList.add(className);
-	}
-
-	/**
-	 * Remove a class from an element.
-	 * 
-	 * @param {Element}  element    The element to remove classes from.
-	 * @param {string}   className  The classes to remove from the passed element.
-	 */
-	removeClass(element, className) {
-		element.classList.remove(className);
+		// size
+		const size = this.getRandomInt(minSize, maxSize);
+		const center = (size / 2);
+		// top
+		const minTop = ((0 - tbOffset) - center);
+		const maxTop = ((height + tbOffset) - center);
+		// left
+		const minLeft = (( 0 - lrOffset ) - center);
+		const maxLeft = ((width + lrOffset) - center);
+		// color
+		var renderColor = color || this.getRandomHex();
+		// Add styles to the speckle.
+		return Object.assign(this.globalStyles, {
+			backgroundColor: renderColor, 
+			boxShadow: isBokeh ? ('0 0 ' + (size / 3) + 'px ' + (size / 3) + 'px ' + renderColor) : '', 
+			height: size + 'px', 
+			left: this.getRandomInt(minLeft, maxLeft) + 'px', 
+			opacity: (this.getRandomInt(minOpacity, maxOpacity) * 0.01), 
+			top: this.getRandomInt(minTop, maxTop) + 'px', 
+			width: size + 'px', 
+			zIndex: isBokeh ? (zIndex + size) : zIndex, 
+		});
 	}
 
 	/**
@@ -172,10 +149,10 @@ class Speckle {
 	 * @return {void} 
 	 */
 	render(element) {
-		const { quantity, minSize, maxSize, tbOffset, lrOffset, minOpacity, maxOpacity, isRainbow, color, isBokeh, zIndex, isCropped, tagName, attributes } = this.options;
-		const { width, height, position } = this.getElementData(element);
+		const { quantity, isCropped, tagName, attributes } = this.options;
+		const { position } = window.getComputedStyle(element);
 		// add the upgraded class.
-		this.addClass(element, this.upgradedClass);
+		element.classList.add(this.upgradedClass);
 		// add relative positioning to the element if it 
 		// is not already `relative`, `fixed`, or `absolute`.
 		if (['relative, absolute, fixed'].indexOf(position) === -1) {
@@ -187,52 +164,18 @@ class Speckle {
 		}
 		// render speckles according to quantity.
 		for (var i = 1; i <= quantity; i++) {
-			// size
-			const size = this.getRandomInt(minSize, maxSize);
-			const center = (size / 2);
-			// top
-			const minTop = ((0 - tbOffset) - center);
-			const maxTop = ((height + tbOffset) - center);
-			const top = this.getRandomInt(minTop, maxTop);
-			// left
-			const minLeft = (( 0 - lrOffset ) - center);
-			const maxLeft = ((width + lrOffset) - center);
-			const left = this.getRandomInt(minLeft, maxLeft);
-			// color
-			var renderColor = color;
-			if (isRainbow) {
-				renderColor = this.getRandomHex();
-			} 
-			// z-index
-			var renderZIndex = zIndex;
-			// box shadow
-			var boxShadow = '';
-			// bokeh
-			if (isBokeh) {
-				boxShadow = '0 0 ' + (size / 3) + 'px ' + (size / 3) + 'px ' + color;
-				zIndex = (zIndex + size);
-			} 
-			// opacity
-			var opacity = (this.getRandomInt(minOpacity, maxOpacity) * 0.01);
 			// Create speckle element according to the `tagName` option.
 			const speckle = document.createElement(tagName);
 			// Set the index of this attribute as `data-speckle-index` 
 			// incase it needs to be accessed by other scripts.
 			speckle.setAttribute('data-speckle-index', i);
-			// Add styles to the speckle.
-			var styles = Object.assign(this.globalStyles, {
-				backgroundColor: renderColor, 
-				boxShadow: boxShadow, 
-				height: size + 'px', 
-				left: left + 'px', 
-				opacity: opacity, 
-				top: top + 'px', 
-				width: size + 'px', 
-				zIndex: renderZIndex, 
-			});
+			// Get speckle styles.
+			const styles = this.getStyles(element);
 			// loop over the speckle style object keys and apply the styles.
-			for (var styleKey in styles) {
-				speckle.style[styleKey] = styles[styleKey];
+			if (styles && typeof styles === 'object') {
+				for (var styleKey in styles) {
+					speckle.style[styleKey] = styles[styleKey];
+				}
 			}
 			// Add the custom attributes to the speckle.
 			if (attributes && typeof attributes === 'object') {

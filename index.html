@@ -11,6 +11,103 @@
 		</header>
 		<main>
 			<body>
+				<h2>Getting Started</h2>
+				<h3>Installation</h3>
+				<p><code>npm install --save speckle-js</code></p>
+				<h3>Usage</h3>
+				<p><code>new Speckle(element, options);</code></p>
+				<h2>Options</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Option</th>
+							<th>type</th>
+							<th>Default</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>quantity</td>
+							<td>int</td>
+							<td><code>56</code></td>
+							<td>Quantity of speckles.</td>
+						</tr>
+						<tr>
+							<td>minSize</td>
+							<td>int</td>
+							<td><code>4</code></td>
+							<td>The smallest speckle (px). Must be greater than 1 and less than <code>maxSize</code></td>
+						</tr>
+						<tr>
+							<td>maxSize</td>
+							<td>int</td>
+							<td><code>56</code></td>
+							<td>The largest speckle (px). Must be greater than 1 and greater than <code>minSize</code></td>
+						</tr>
+						<tr>
+							<td>tbOffset</td>
+							<td>int</td>
+							<td><code>56</code></td>
+							<td>Top/Bottom offset (px). Must be greater than or equal to 0. This is the maxiumum distance that speckles can be rendered from the top/bottom of the container element.</td>
+						</tr>
+						<tr>
+							<td>lrOffset</td>
+							<td>int</td>
+							<td><code>56</code></td>
+							<td>Left/Right offset (px). Must be greater than or equal to 0. This is the maximum distance that speckles can be rendered from the left/right of the container element.</td>
+						</tr>
+						<tr>
+							<td>minOpacity</td>
+							<td>int/float</td>
+							<td><code>12.5</code></td>
+							<td>The most transparent a speckle can be (%). This is a percentage where 100 means 100% opacity, and 0 means 0% opacity. This must be between 0 and 100, and less than <code>maxOpacity</code></td>
+						</tr>
+						<tr>
+							<td>maxOpacity</td>
+							<td>int/float</td>
+							<td><code>87.5</code></td>
+							<td>The most opaque a speckle can be (%). This is a percentage where 100 means 100% opacity, and 0 means 0% opacity. This must be between 0 and 100, and greater than <code>minOpacity</code></td>
+						</tr>
+						<tr>
+							<td>isBokeh</td>
+							<td>bool</td>
+							<td><code>false</code></td>
+							<td>Whether the speckles should blur as a factor of distance (Bokeh lights effect) or not.</td>
+						</tr>
+						<tr>
+							<td>color</td>
+							<td>string</td>
+							<td></td>
+							<td>The speckle color. If this is a falsy value, a random hex color will be generated using Speckle's <code>getRandomHex()</code> method.</td>
+						</tr>
+						<tr>
+							<td>zIndex</td>
+							<td>int</td>
+							<td><code>0</code></td>
+							<td>The CSS <code>z-index</code> of the speckles.</td>
+						</tr>
+						<tr>
+							<td>isCropped</td>
+							<td>bool</td>
+							<td><code>false</code></td>
+							<td>Whether to apply <code>overflow: hidden;</code> to the container element or not.</td>
+						</tr>
+						<tr>
+							<td>tagName</td>
+							<td>string</td>
+							<td><code>I</code></td>
+							<td>What HTML tag name the speckles should be rendered as. This string must be capitalized.</td>
+						</tr>
+						<tr>
+							<td>attibutes</td>
+							<td>obj</td>
+							<td><code>null</code></td>
+							<td>An object of valid HTML attributes as <code>key: value</code> pairs to be added to the speckles.</td>
+						</tr>
+					</tbody>
+				</table>
+				<h2>Examples</h2>
 				<div class="speckle-demo" id="default"><h3>Default</h3></div>
 				<div class="speckle-demo" id="large"><h3>Large</h3></div>
 				<div class="speckle-demo" id="small"><h3>Small</h3></div>

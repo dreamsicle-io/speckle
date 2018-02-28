@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Speckle.js</title>
-		<link rel="stylesheet" href="demo.css">
+		<link rel="stylesheet" href="assets/dist/css/demo.min.css">
 	</head>
 	<body>
 		<header>
@@ -12,10 +12,18 @@
 		<main>
 			<body>
 				<h2>Getting Started</h2>
+
 				<h3>Installation</h3>
 				<p><code>npm install --save speckle-js</code></p>
+
 				<h3>Usage</h3>
-				<p><code>new Speckle(element, options);</code></p>
+				<p>Import the module using ES6/Babel.</p>
+				<code>import Speckle from 'speckle-js';</code>
+				<p>Import the module using CommonJS.</p>
+				<code>const Speckle = require('speckle-js');</code>
+				<p>Use the constructor by passing a valid HTML element as the first argument, and an options object of <code>key: value</code> pairs as the second argument.</p>
+				<code>new Speckle(element, options);</code>
+
 				<h2>Options</h2>
 				<table>
 					<thead>
@@ -122,7 +130,6 @@
 		</main>
 		<footer>
 		</footer>
-		<script src="speckle.js"></script>
-		<script src="demo.js"></script>
+		<script src="assets/dist/js/demo.min.js"></script>
 	</body>
 </html>

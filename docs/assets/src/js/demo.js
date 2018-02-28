@@ -1,5 +1,7 @@
 'use-strict';
 
+import Speckle from '../../../../Speckle.js';
+
 document.addEventListener('DOMContentLoaded', function(e) {
 	// Default
 	new Speckle(document.querySelector('#default'));
@@ -64,19 +66,20 @@ document.addEventListener('DOMContentLoaded', function(e) {
 		minOpacity: 25,  
 		maxOpacity: 50,   
 	});
-	// Multiple
-	const multiple = document.querySelector('#multiple');
-	new Speckle(multiple, {
+	// Multi
+	const multi = document.querySelector('#multi');
+	new Speckle(multi, {
 		tbOffset: 96, 
 		lrOffset: 128, 
+		zIndex: 1, 
 	});
-	new Speckle(multiple, {
+	new Speckle(multi, {
 		quantity: 4, 
 		minSize: 8, 
 		maxSize: 256, 
-		zIndex: 10
+		zIndex: 2, 
 	});
-	new Speckle(multiple, {
+	new Speckle(multi, {
 		isBokeh: true,  
 		quantity: 24,  
 		minSize: 8,  
@@ -85,6 +88,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
 		lrOffset: 256,  
 		minOpacity: 25,  
 		maxOpacity: 50, 
-		zIndex: 4 
+		zIndex: 3,  
 	});
 });

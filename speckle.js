@@ -21,21 +21,21 @@ class Speckle {
 	 */
 	constructor(element, options) {
 		// throw error if `element` is not a valid HTML element.
-		if (! element || ! element instanceof Element) {
+		if (! element || ! (element instanceof Element)) {
 			this.throwElementError();
 		}
 		// Set the default options.
 		this.defaultOptions = {
 			quantity: 56, // quantity of speckles
-			minSize: 4, // smallest speckle (1+, less than `maxSize`)
-			maxSize: 56, // largest speckle (1+, greater than `minSize`)
+			minSize: 4, // smallest speckle (1+, less than `maxSize`, px)
+			maxSize: 56, // largest speckle (1+, greater than `minSize`, px)
 			tbOffset: 56, // top/bottom offset (0+, px)
 			lrOffset: 56,  // left/right offset (0+, px)
 			minOpacity: 12.5, // minimum opacity (1-100)
 			maxOpacity: 87.5, // maximum opacity (1-100)
 			isBokeh: false, // bokeh effect (blur as a factor of distance)
 			color: '', // color (hex, rgb, hsl, keyword). If none, the colors will be randomized.
-			zIndex: 500, // z-index (bokeh: the starting z-index)
+			zIndex: 0, // z-index (bokeh: the starting z-index)
 			isCropped: false, // apply `overflow: hidden;` to the container
 			tagName: 'I', // the Tag Name that the speckle should be rendered as
 			attributes: null // attributes object as `key: value` pairs
@@ -89,7 +89,7 @@ class Speckle {
 		throw new Error(
 			'Speckle.js\n' + 
 			'A valid HTML Element must be passed to the constructor as the first argument.'
-		)
+		);
 	}
 
 	/**
@@ -124,7 +124,7 @@ class Speckle {
 		const minTop = ((0 - tbOffset) - center);
 		const maxTop = ((height + tbOffset) - center);
 		// left
-		const minLeft = (( 0 - lrOffset ) - center);
+		const minLeft = ((0 - lrOffset) - center);
 		const maxLeft = ((width + lrOffset) - center);
 		// color
 		var renderColor = color || this.getRandomHex();
@@ -137,7 +137,7 @@ class Speckle {
 			opacity: (this.getRandomInt(minOpacity, maxOpacity) * 0.01), 
 			top: this.getRandomInt(minTop, maxTop) + 'px', 
 			width: size + 'px', 
-			zIndex: isBokeh ? (zIndex + size) : zIndex, 
+			zIndex: zIndex, 
 		});
 	}
 
@@ -189,3 +189,5 @@ class Speckle {
 	}
 
 }
+
+export default Speckle;

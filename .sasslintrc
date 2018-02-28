@@ -1,0 +1,22 @@
+{
+  "options": {
+    "merge-default-rules": true
+  },
+  "rules": {
+  	"class-name-format": [2, { 
+  		"convention": "hyphenatedbem" 
+  	}], 
+  	"hex-length": [2, { 
+  		"style": "long" 
+  	}], 
+  	"leading-zero": [2, { 
+  		"include": true 
+  	}], 
+  	"indentation": [2, { 
+  		"size": "tab" 
+  	}], 
+  	"nesting-depth": [2, { 
+  		"max-depth": 3 
+  	}]
+  }
+}

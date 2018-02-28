@@ -1,0 +1,44 @@
+{
+  "name": "speckle-js",
+  "version": "0.0.1",
+  "description": "A javascript plugin that adds stylized speckles to any element, with no dependencies. ",
+  "main": "speckle.js",
+  "scripts": {
+    "start": "node ./node_modules/gulp/bin/gulp",
+    "build": "node ./node_modules/gulp/bin/gulp build",
+    "clean": "node ./node_modules/gulp/bin/gulp clean",
+    "lint": "node ./node_modules/gulp/bin/gulp lint",
+    "test": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dreamsiclemedia/speckle.git"
+  },
+  "keywords": [
+    "javascript"
+  ],
+  "author": "Dreamsicle",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/dreamsiclemedia/speckle/issues"
+  },
+  "homepage": "https://github.com/dreamsiclemedia/speckle#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babelify": "^8.0.0",
+    "browserify": "^16.1.0",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^4.1.0",
+    "gulp-debug": "^3.2.0",
+    "gulp-eslint": "^4.0.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sass-lint": "^1.3.4",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}

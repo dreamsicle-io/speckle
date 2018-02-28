@@ -17,7 +17,37 @@ const autoprefixer = require('gulp-autoprefixer');
 
 
 /**
- * Clean build directory.
+ * Clean Docs build JS directory.
+ *
+ * Process:
+ *	 1. Deletes the Docs build JS directory.
+ *
+ * Run:
+ *	 - Global command: `gulp clean:js`.
+ *	 - Local command: `node ./node_modules/gulp/bin/gulp clean:js`.
+ *	 - NPM script: `npm run clean:js`.
+ */
+gulp.task('clean:js', function jsCleaner(done) {
+	return del('docs/assets/dist/js', done());
+});
+
+/**
+ * Clean Docs build CSS directory.
+ *
+ * Process:
+ *	 1. Deletes the Docs build CSS directory.
+ *
+ * Run:
+ *	 - Global command: `gulp clean:css`.
+ *	 - Local command: `node ./node_modules/gulp/bin/gulp clean:css`.
+ *	 - NPM script: `npm run clean:css`.
+ */
+gulp.task('clean:css', function cssCleaner(done) {
+	return del('docs/assets/dist/css', done());
+});
+
+/**
+ * Clean Docs build directory.
  *
  * Process:
  *	 1. Deletes the Docs build directory.
@@ -176,10 +206,10 @@ gulp.task('build', gulp.series('build:js', 'build:sass'));
 gulp.task('watch', function watcher() {
 	// Lint js when gulpfile.js changes, but do not build. 
 	gulp.watch('gulpfile.js', gulp.series('lint:js'));
-	// Watch speckle.js file, and docs src js. Lint and rebuild JS on change.
-	gulp.watch(['speckle.js', 'docs/assets/src/**/*.js'], gulp.series('lint:js', 'build:js'));
-	// Watch all docs src sass. Lint and rebuild Sass on change.
-	gulp.watch(['docs/assets/src/**/*.scss'], gulp.series('lint:sass', 'build:sass'));
+	// Watch speckle.js file, and docs src js. Rebuild JS on change.
+	gulp.watch(['speckle.js', 'docs/assets/src/**/*.js'], gulp.series('build:js'));
+	// Watch all docs src sass. Rebuild Sass on change.
+	gulp.watch(['docs/assets/src/**/*.scss'], gulp.series('build:sass'));
 });
 
 /**

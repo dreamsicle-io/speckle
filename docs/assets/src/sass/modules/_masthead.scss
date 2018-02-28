@@ -1,0 +1,39 @@
+.speckle-masthead {
+	align-items: center;
+	background: $gradient--primary-to-secondary;
+	color: $color--text-on-dark;
+	display: flex;
+	flex-flow: column;
+	height: 90vh;
+	justify-content: center;
+
+	&::before,
+	&::after {
+		@include clearfix;
+	}
+
+	&__inner {
+		position: relative;
+		text-align: center;
+	}
+
+	&__title {
+		font-size: 4em;
+		margin: 0;
+		position: relative;
+		z-index: 2;
+	}
+
+	&__tagline {
+		@include contain('tablet');
+		font-size: 1.64em;
+		max-width: 564px;
+		position: relative;
+		z-index: 2;
+	}
+
+	.speckle-button {
+		margin-top: 8px;
+		z-index: 8;
+	}
+}

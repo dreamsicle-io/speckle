@@ -32,6 +32,24 @@
 		z-index: 2;
 	}
 
+	&__links {
+		color: $color--text-on-dark;
+		position: absolute;
+		right: $gutter--phone;
+		top: $gutter--phone;
+		z-index: 1;
+
+		@media screen and (min-width: 768px) {
+			right: $gutter--tablet;
+			top: $gutter--tablet;
+		}
+
+		@media screen and (min-width: 1200px) {
+			right: $gutter--desktop;
+			top: $gutter--desktop;
+		}
+	}
+
 	.speckle-button {
 		margin-top: 8px;
 		z-index: 8;

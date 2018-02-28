@@ -42,6 +42,31 @@ class Speckle {
 		};
 		// Parse and set options.
 		this.options = this.parseOptions(options, this.defaultOptions);
+		const { minSize, maxSize, tbOffset, lrOffset, minOpacity, maxOpacity } = this.options;
+		// throw error if `minSize` is less than 1, or greater than `maxSize`.
+		if ((minSize < 1) || (minSize > maxSize)) {
+			this.throwOptionsError('minSize');
+		}
+		// throw error if `maxSize` is less than 1, or less than `minSize`.
+		if ((maxSize < 1) || (maxSize < minSize)) {
+			this.throwOptionsError('maxSize');
+		}
+		// throw error if `tbOffset` is less than 0.
+		if (tbOffset < 0) {
+			this.throwOptionsError('tbOffset');
+		}
+		// throw error if `lrOffset` is less than 0.
+		if (lrOffset < 0) {
+			this.throwOptionsError('lrOffset');
+		}
+		// throw error if `minOpacity` is less than 0 or greater than 100; or if is greater than `maxOpacity`.
+		if ((minOpacity < 0) || (minOpacity > 100) || (minOpacity > maxOpacity)) {
+			this.throwOptionsError('minOpacity');
+		}
+		// throw error if `maxOpacity` is less than 0 or greater than 100; or if is less than `minOpacity`.
+		if ((maxOpacity < 0) || (maxOpacity > 100) || (maxOpacity < minOpacity)) {
+			this.throwOptionsError('maxOpacity');
+		}
 		// Set the global styles.
 		this.globalStyles = {
 			borderRadius: '50%', 
@@ -89,6 +114,32 @@ class Speckle {
 		throw new Error(
 			'Speckle.js\n' + 
 			'A valid HTML Element must be passed to the constructor as the first argument.'
+		);
+	}
+
+	/**
+	 * Throw an element error.
+	 * 
+	 * @since  0.0.1
+	 * @return {Error}  The formatted element error.
+	 */
+	throwOptionsError(key) {
+		var message = '';
+		if (key === 'minSize') {
+			message = 'The value must be greater than or equal to 1, and less than `maxSize`.';
+		} else if (key === 'maxSize') {
+			message = 'The value must be greater than or equal to 1, and greater than `minSize`.';
+		} else if (key === 'tbOffset') {
+			message = 'The value must be greater than 0.';
+		} else if (key === 'lrOffset') {
+			message = 'The value must be greater than 0.';
+		} else if (key === 'minOpacity') {
+			message = 'The value must be between 1 and 100, and less than `maxOpacity`.';
+		} else if (key === 'maxOpacity') {
+			message = 'The value must be between 1 and 100, and greater than `minOpacity`.';
+		}
+		throw new Error(
+			'Speckle.js [' + key + ']\n' + message
 		);
 	}
 

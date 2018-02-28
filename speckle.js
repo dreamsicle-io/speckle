@@ -124,7 +124,7 @@ class Speckle {
 		const minTop = ((0 - tbOffset) - center);
 		const maxTop = ((height + tbOffset) - center);
 		// left
-		const minLeft = (( 0 - lrOffset ) - center);
+		const minLeft = ((0 - lrOffset) - center);
 		const maxLeft = ((width + lrOffset) - center);
 		// color
 		var renderColor = color || this.getRandomHex();

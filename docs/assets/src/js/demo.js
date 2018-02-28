@@ -1,5 +1,7 @@
 'use-strict';
 
+import Speckle from '../../../../Speckle.js';
+
 document.addEventListener('DOMContentLoaded', function(e) {
 	// Default
 	new Speckle(document.querySelector('#default'));
@@ -75,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function(e) {
 		quantity: 4, 
 		minSize: 8, 
 		maxSize: 256, 
-		zIndex: 10, 
 		zIndex: 2, 
 	});
 	new Speckle(multi, {

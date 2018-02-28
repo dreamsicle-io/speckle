@@ -20,6 +20,11 @@
 		font-weight: bold;
 	}
 
+	&__scroller {
+		box-sizing: border-box;
+		overflow-x: auto;
+	}
+
 	&--options {
 		background: $gradient--secondary-to-primary;
 	}

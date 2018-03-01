@@ -11,20 +11,24 @@ import Speckle from '../../../../Speckle.js';
 function initMastheadSpeckles() {
 	// Layer 2
 	new Speckle(document.querySelector('.speckle-masthead'), {
-		quantity: 28, 
+		quantity: 36, 
 		minSize: 4, 
 		maxSize: 64,
 		maxOpacity: 64, 
 		isCropped: true, 
+		lrOffset: 4, 
+		tbOffset: 4, 
 		zIndex: 5,
 	});
 	// Layer 1
 	new Speckle(document.querySelector('.speckle-masthead'), {
-		quantity: 8, 
+		quantity: 12, 
 		minSize: 256, 
 		maxSize: 768,
 		maxOpacity: 74, 
 		isCropped: true, 
+		lrOffset: 2, 
+		tbOffset: 2, 
 		zIndex: 0,
 	});
 }
@@ -44,8 +48,8 @@ function initSectionTitleSpeckles() {
 				minSize: 4, 
 				maxSize: 18,
 				maxOpacity: 64, 
-				lrOffset: 12.5, 
-				tbOffset: 12.5, 
+				lrOffset: 16, 
+				tbOffset: 16, 
 			});
 		});
 	}

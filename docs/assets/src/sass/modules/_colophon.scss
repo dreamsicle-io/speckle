@@ -1,4 +1,25 @@
 .speckle-colophon {
 	background-color: $color--dark;
 	color: $color--text-on-dark;
+
+	&::before,
+	&::after {
+		@include clearfix;
+	}
+
+	&__bottom {
+		@include contain('desktop');
+		display: flex;
+		flex-flow: row;
+
+		> *:last-child {
+			margin-left: auto;
+			text-align: right;
+		}
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+	}
 }

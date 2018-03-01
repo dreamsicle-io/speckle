@@ -3,8 +3,8 @@
 /**
  * Speckle.js
  *
- * A JavaScript module that adds stylized speckles 
- * to any element, with no dependencies.
+ * A JavaScript module that adds responsive, stylized 
+ * speckles to any element; with no dependencies.
  *
  * @package speckle
  * @since   0.0.1
@@ -29,8 +29,8 @@ class Speckle {
 			quantity: 56, // quantity of speckles
 			minSize: 4, // smallest speckle (1+, less than `maxSize`, px)
 			maxSize: 56, // largest speckle (1+, greater than `minSize`, px)
-			tbOffset: 56, // top/bottom offset (0+, px)
-			lrOffset: 56,  // left/right offset (0+, px)
+			tbOffset: 8, // top/bottom offset (0+, %)
+			lrOffset: 8,  // left/right offset (0+, %)
 			minOpacity: 12.5, // minimum opacity (1-100)
 			maxOpacity: 87.5, // maximum opacity (1-100)
 			isBokeh: false, // bokeh effect (blur as a factor of distance)
@@ -97,7 +97,15 @@ class Speckle {
 		// loop default option keys and parse. If the options 
 		// object has this key, use it; else, use the default option.
 		for (var key in defaultOptions) {
-			parsedOptions[key] = options[key] || defaultOptions[key];
+			const value = options[key];
+			// If the value is a number, set it no matter what.
+			// This prevents issues where passing `0` is read as 
+			// no option passed, rendering the default instead.
+			if (typeof value === 'number') {
+				parsedOptions[key] = value;
+			} else {
+				parsedOptions[key] = value || defaultOptions[key];
+			}
 		}
 		// return the parsed options.
 		return parsedOptions;
@@ -167,26 +175,19 @@ class Speckle {
 
 	getStyles(element) {
 		const { minSize, maxSize, tbOffset, lrOffset, minOpacity, maxOpacity, color, isBokeh, zIndex } = this.options;
-		const { width, height } = element.getBoundingClientRect();
 		// size
 		const size = this.getRandomInt(minSize, maxSize);
 		const center = (size / 2);
-		// top
-		const minTop = ((0 - tbOffset) - center);
-		const maxTop = ((height + tbOffset) - center);
-		// left
-		const minLeft = ((0 - lrOffset) - center);
-		const maxLeft = ((width + lrOffset) - center);
 		// color
-		var renderColor = color || this.getRandomHex();
-		// Add styles to the speckle.
+		const renderColor = color || this.getRandomHex();
+		// Create the styles object.
 		return Object.assign(this.globalStyles, {
 			backgroundColor: renderColor, 
 			boxShadow: isBokeh ? ('0 0 ' + (size / 3) + 'px ' + (size / 3) + 'px ' + renderColor) : '', 
 			height: size + 'px', 
-			left: this.getRandomInt(minLeft, maxLeft) + 'px', 
+			left: 'calc(' + this.getRandomInt(0 - lrOffset, 100 + lrOffset) + '% - ' + center + 'px)', 
 			opacity: (this.getRandomInt(minOpacity, maxOpacity) * 0.01), 
-			top: this.getRandomInt(minTop, maxTop) + 'px', 
+			top: 'calc(' + this.getRandomInt(0 - tbOffset, 100 + tbOffset) + '% - ' + center + 'px)', 
 			width: size + 'px', 
 			zIndex: zIndex, 
 		});

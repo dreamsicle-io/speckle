@@ -22,6 +22,11 @@
 		margin: 0;
 		position: relative;
 		z-index: 2;
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
 	}
 
 	&__tagline {

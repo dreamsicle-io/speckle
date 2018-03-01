@@ -1,7 +1,7 @@
 {
   "name": "speckle-js",
   "version": "0.0.1",
-  "description": "A JavaScript module that adds stylized speckles to any element, with no dependencies. ",
+  "description": "A JavaScript module that adds responsive, stylized speckles to any element; with no dependencies.",
   "main": "speckle.js",
   "scripts": {
     "start": "node ./node_modules/gulp/bin/gulp",

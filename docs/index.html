@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="assets/dist/css/main.min.css" />
 	</head>
 	<body>
-		<header class="speckle-masthead">
+		<header id="#top" class="speckle-masthead">
 			<div class="speckle-masthead__links">
 				<a href="https://github.com/dreamsiclemedia/speckle" title="View on GitHub">
 					<img src="assets/github.svg" width="48px" height="48px" alt="View on GitHub" />
@@ -16,139 +16,145 @@
 			</div>
 			<div class="speckle-masthead__inner">
 				<h1 class="speckle-masthead__title">Speckle.js</h1>
-				<p class="speckle-masthead__tagline">A JavaScript module that adds stylized speckles to any element, with no dependencies.</p>
+				<p class="speckle-masthead__tagline">A JavaScript module that adds responsive, stylized speckles to any element; with no dependencies.</p>
 				<a href="#getting_started" class="speckle-button">Get Started</a>
 			</div>
 		</header>
 		<main>
-			<section id="getting_started" class="speckle-section speckle-section--getting-started">
-				<div class="speckle-section__inner">
-					<h2 class="speckle-section__title">Getting Started</h2>
-					<h3>Installation</h3>
-					<p><code>npm install --save speckle-js</code></p>
-					<h3>Usage</h3>
-					<p>Import the module.</p>
-					<code>import Speckle from 'speckle-js';</code>
-					<p>Use the constructor by passing a valid HTML element as the first argument, and an options object of <code>key: value</code> pairs as the second argument.</p>
-					<code>new Speckle(element, options);</code>
-				</div>
-			</section>
-			<section id="options" class="speckle-section speckle-section--options">
-				<div class="speckle-section__inner">
-					<h2 class="speckle-section__title">Options</h2>
-					<div class="speckle-section__scroller">
-						<table style="border: none;">
-							<thead>
-								<tr>
-									<th>Option</th>
-									<th>Type</th>
-									<th>Default</th>
-									<th>Description</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><code>quantity</code></td>
-									<td><em>int</em></td>
-									<td><code>56</code></td>
-									<td>Quantity of speckles.</td>
-								</tr>
-								<tr>
-									<td><code>minSize</code></td>
-									<td><em>int</em></td>
-									<td><code>4</code></td>
-									<td>The smallest speckle (px). Must be greater than <code>1</code> and less than <code>maxSize</code></td>
-								</tr>
-								<tr>
-									<td><code>maxSize</code></td>
-									<td><em>int</em></td>
-									<td><code>56</code></td>
-									<td>The largest speckle (px). Must be greater than <code>1</code> and greater than <code>minSize</code></td>
-								</tr>
-								<tr>
-									<td><code>tbOffset</code></td>
-									<td><em>int</em></td>
-									<td><code>56</code></td>
-									<td>Top/Bottom offset (px). Must be greater than or equal to <code>0</code>. This is the maxiumum distance that speckles can be rendered from the top/bottom of the container element.</td>
-								</tr>
-								<tr>
-									<td><code>lrOffset</code></td>
-									<td><em>int</em></td>
-									<td><code>56</code></td>
-									<td>Left/Right offset (px). Must be greater than or equal to <code>0</code>. This is the maximum distance that speckles can be rendered from the left/right of the container element.</td>
-								</tr>
-								<tr>
-									<td><code>minOpacity</code></td>
-									<td><em>int</em>/<em>float</em></td>
-									<td><code>12.5</code></td>
-									<td>The most transparent a speckle can be (%). This is a percentage where <code>100</code> means 100% opacity, and <code>0</code> means 0% opacity. This must be between <code>0</code> and <code>100</code>, and less than <code>maxOpacity</code></td>
-								</tr>
-								<tr>
-									<td><code>maxOpacity</code></td>
-									<td><em>int</em>/<em>float</em></td>
-									<td><code>87.5</code></td>
-									<td>The most opaque a speckle can be (%). This is a percentage where <code>100</code> means 100% opacity, and <code>0</code> means 0% opacity. This must be between <code>0</code> and <code>100</code>, and greater than <code>minOpacity</code></td>
-								</tr>
-								<tr>
-									<td><code>isBokeh</code></td>
-									<td><em>bool</em></td>
-									<td><code>false</code></td>
-									<td>Whether the speckles should blur as a factor of distance (Bokeh lights effect) or not.</td>
-								</tr>
-								<tr>
-									<td><code>color</code></td>
-									<td><em>string</em></td>
-									<td></td>
-									<td>The speckle color. If this is a falsy value, a random hex color will be generated using Speckle's <code>getRandomHex()</code> method.</td>
-								</tr>
-								<tr>
-									<td><code>zIndex</code></td>
-									<td><em>int</em></td>
-									<td><code>0</code></td>
-									<td>The CSS <code>z-index</code> of the speckles.</td>
-								</tr>
-								<tr>
-									<td><code>isCropped</code></td>
-									<td><em>bool</em></td>
-									<td><code>false</code></td>
-									<td>Whether to apply <code>overflow: hidden;</code> to the container element or not.</td>
-								</tr>
-								<tr>
-									<td><code>tagName</code></td>
-									<td><em>string</em></td>
-									<td><code>I</code></td>
-									<td>What HTML tag name the speckles should be rendered as. This string must be capitalized.</td>
-								</tr>
-								<tr>
-									<td><code>attibutes</code></td>
-									<td><em>obj</em></td>
-									<td><code>null</code></td>
-									<td>An object of valid HTML attributes as <code>key: value</code> pairs to be added to the speckles.</td>
-								</tr>
-							</tbody>
-						</table>
+			<article>
+				<section id="getting_started" class="speckle-section speckle-section--getting-started">
+					<div class="speckle-section__inner">
+						<h2 class="speckle-section__title">Getting Started</h2>
+						<h3>Installation</h3>
+						<p><code>npm install --save speckle-js</code></p>
+						<h3>Usage</h3>
+						<p>Import the module.</p>
+						<code>import Speckle from 'speckle-js';</code>
+						<p>Use the constructor by passing a valid HTML element as the first argument, and an options object of <code>key: value</code> pairs as the second argument.</p>
+						<code>new Speckle(element, options);</code>
 					</div>
-				</div>
-			</section>
-			<section id="examples" class="speckle-section speckle-section--examples">
-				<div class="speckle-section__inner">
-					<h2 class="speckle-section__title">Examples</h2>
-					<div class="speckle-demo" id="default"><h3>Default</h3></div>
-					<div class="speckle-demo" id="large"><h3>Large</h3></div>
-					<div class="speckle-demo" id="small"><h3>Small</h3></div>
-					<div class="speckle-demo" id="mono"><h3>Mono</h3></div>
-					<div class="speckle-demo" id="alot"><h3>A Lot</h3></div>
-					<div class="speckle-demo" id="alittle"><h3>A Little</h3></div>
-					<div class="speckle-demo" id="deco"><h3>Art Deco</h3></div>
-					<div class="speckle-demo" id="crop"><h3>Crop</h3></div>
-					<div class="speckle-demo" id="bokeh"><h3>Bokeh</h3></div>
-					<div class="speckle-demo" id="multi"><h3>Multi</h3></div>
-					<div class="speckle-demo" id="space" style="background-color: #000000;"><h3>Space</h3></div>
-					<div class="speckle-demo" id="cheese" style="background-color: #fff700;"><h3>Cheese</h3></div>
-				</div>
-			</section>
+				</section>
+				<section id="options" class="speckle-section speckle-section--options">
+					<div class="speckle-section__inner">
+						<h2 class="speckle-section__title">Options</h2>
+						<div class="speckle-section__scroller">
+							<table style="border: none;">
+								<thead>
+									<tr>
+										<th>Option</th>
+										<th>Type</th>
+										<th>Default</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>quantity</code></td>
+										<td><em>int</em></td>
+										<td><code>56</code></td>
+										<td>Quantity of speckles.</td>
+									</tr>
+									<tr>
+										<td><code>minSize</code></td>
+										<td><em>int</em></td>
+										<td><code>4</code></td>
+										<td>The smallest speckle (px). Must be greater than <code>1</code> and less than <code>maxSize</code></td>
+									</tr>
+									<tr>
+										<td><code>maxSize</code></td>
+										<td><em>int</em></td>
+										<td><code>56</code></td>
+										<td>The largest speckle (px). Must be greater than <code>1</code> and greater than <code>minSize</code></td>
+									</tr>
+									<tr>
+										<td><code>tbOffset</code></td>
+										<td><em>int</em></td>
+										<td><code>56</code></td>
+										<td>Top/Bottom offset (%). Must be greater than or equal to <code>0</code>. This is the maxiumum distance that speckles can be rendered from the top/bottom of the container element.</td>
+									</tr>
+									<tr>
+										<td><code>lrOffset</code></td>
+										<td><em>int</em></td>
+										<td><code>56</code></td>
+										<td>Left/Right offset (%). Must be greater than or equal to <code>0</code>. This is the maximum distance that speckles can be rendered from the left/right of the container element.</td>
+									</tr>
+									<tr>
+										<td><code>minOpacity</code></td>
+										<td><em>int</em>/<em>float</em></td>
+										<td><code>12.5</code></td>
+										<td>The most transparent a speckle can be (%). This is a percentage where <code>100</code> means 100% opacity, and <code>0</code> means 0% opacity. This must be between <code>0</code> and <code>100</code>, and less than <code>maxOpacity</code></td>
+									</tr>
+									<tr>
+										<td><code>maxOpacity</code></td>
+										<td><em>int</em>/<em>float</em></td>
+										<td><code>87.5</code></td>
+										<td>The most opaque a speckle can be (%). This is a percentage where <code>100</code> means 100% opacity, and <code>0</code> means 0% opacity. This must be between <code>0</code> and <code>100</code>, and greater than <code>minOpacity</code></td>
+									</tr>
+									<tr>
+										<td><code>isBokeh</code></td>
+										<td><em>bool</em></td>
+										<td><code>false</code></td>
+										<td>Whether the speckles should blur as a factor of distance (Bokeh lights effect) or not.</td>
+									</tr>
+									<tr>
+										<td><code>color</code></td>
+										<td><em>string</em></td>
+										<td></td>
+										<td>The speckle color. If this is a falsy value, a random hex color will be generated using Speckle's <code>getRandomHex()</code> method.</td>
+									</tr>
+									<tr>
+										<td><code>zIndex</code></td>
+										<td><em>int</em></td>
+										<td><code>0</code></td>
+										<td>The CSS <code>z-index</code> of the speckles.</td>
+									</tr>
+									<tr>
+										<td><code>isCropped</code></td>
+										<td><em>bool</em></td>
+										<td><code>false</code></td>
+										<td>Whether to apply <code>overflow: hidden;</code> to the container element or not.</td>
+									</tr>
+									<tr>
+										<td><code>tagName</code></td>
+										<td><em>string</em></td>
+										<td><code>I</code></td>
+										<td>What HTML tag name the speckles should be rendered as. This string must be capitalized.</td>
+									</tr>
+									<tr>
+										<td><code>attibutes</code></td>
+										<td><em>obj</em></td>
+										<td><code>null</code></td>
+										<td>An object of valid HTML attributes as <code>key: value</code> pairs to be added to the speckles.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</section>
+				<section id="examples" class="speckle-section speckle-section--examples">
+					<div class="speckle-section__inner">
+						<h2 class="speckle-section__title">Examples</h2>
+						<div class="speckle-demo" id="default"><h3>Default</h3></div>
+						<div class="speckle-demo" id="large"><h3>Large</h3></div>
+						<div class="speckle-demo" id="small"><h3>Small</h3></div>
+						<div class="speckle-demo" id="mono"><h3>Mono</h3></div>
+						<div class="speckle-demo" id="alot"><h3>A Lot</h3></div>
+						<div class="speckle-demo" id="alittle"><h3>A Little</h3></div>
+						<div class="speckle-demo" id="deco"><h3>Art Deco</h3></div>
+						<div class="speckle-demo" id="crop"><h3>Crop</h3></div>
+						<div class="speckle-demo" id="bokeh"><h3>Bokeh</h3></div>
+						<div class="speckle-demo" id="multi"><h3>Multi</h3></div>
+						<div class="speckle-demo" id="space" style="background-color: #000000;"><h3>Space</h3></div>
+						<div class="speckle-demo" id="cheese" style="background-color: #fff700;"><h3>Cheese</h3></div>
+					</div>
+				</section>
+			</article>
 		</main>
 		<footer class="speckle-colophon">
+			<div class="speckle-colophon__bottom">
+				<p id="copyright">&copy; %CURRENT_YEAR% <a href="http://www.dreamsicle.io">Dreamsicle</a></p>
+				<p><a href="http://www.dreamsicle.io">Flavored by Dreamsicle</a></p>
+			</div>
 		</footer>
 		<script src="assets/dist/js/main.min.js"></script>
 	</body>

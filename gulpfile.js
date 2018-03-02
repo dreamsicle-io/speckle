@@ -17,33 +17,17 @@ const autoprefixer = require('gulp-autoprefixer');
 
 
 /**
- * Clean Docs build JS directory.
+ * Clean module build directory.
  *
  * Process:
- *	 1. Deletes the Docs build JS directory.
+ *	 1. Deletes the module build directory.
  *
  * Run:
- *	 - Global command: `gulp clean:js`.
- *	 - Local command: `node ./node_modules/gulp/bin/gulp clean:js`.
- *	 - NPM script: `npm run clean:js`.
+ *	 - Global command: `gulp clean:module`.
+ *	 - Local command: `node ./node_modules/gulp/bin/gulp clean:module`.
  */
-gulp.task('clean:js', function jsCleaner(done) {
-	return del('docs/assets/dist/js', done());
-});
-
-/**
- * Clean Docs build CSS directory.
- *
- * Process:
- *	 1. Deletes the Docs build CSS directory.
- *
- * Run:
- *	 - Global command: `gulp clean:css`.
- *	 - Local command: `node ./node_modules/gulp/bin/gulp clean:css`.
- *	 - NPM script: `npm run clean:css`.
- */
-gulp.task('clean:css', function cssCleaner(done) {
-	return del('docs/assets/dist/css', done());
+gulp.task('clean:module', function moduleCleaner(done) {
+	return del('dist', done());
 });
 
 /**
@@ -53,13 +37,26 @@ gulp.task('clean:css', function cssCleaner(done) {
  *	 1. Deletes the Docs build directory.
  *
  * Run:
- *	 - Global command: `gulp clean`.
- *	 - Local command: `node ./node_modules/gulp/bin/gulp clean`.
- *	 - NPM script: `npm run clean`.
+ *	 - Global command: `gulp clean:docs`.
+ *	 - Local command: `node ./node_modules/gulp/bin/gulp clean:docs`.
  */
-gulp.task('clean', function cleaner(done) {
+gulp.task('clean:docs', function docsCleaner(done) {
 	return del('docs/assets/dist', done());
 });
+
+/**
+ * Clean Docs build directory.
+ *
+ * Process:
+ *	 1. Runs the `clean:module` task.
+ *	 2. Runs the `clean:docs` task.
+ *
+ * Run:
+ *	 - Global command: `gulp clean`.
+ *	 - Local command: `node ./node_modules/gulp/bin/gulp clean`.
+ *	 - NPM command: `npm run clean`.
+ */
+gulp.task('clean', gulp.series('clean:module', 'clean:docs'));
 
 /**
  * Lint all JS files.
@@ -74,7 +71,7 @@ gulp.task('clean', function cleaner(done) {
  *	 - Local command: `node ./node_modules/gulp/bin/gulp lint:js`.
  */
 gulp.task('lint:js', function jsLinter() {
-	return gulp.src(['**/*.js', '!node_modules/**', '!docs/assets/dist/**'])
+	return gulp.src(['**/*.js', '!node_modules/**', '!dist/**', '!docs/assets/dist/**'])
 		.pipe(eslint())
 		.pipe(eslint.format())
 		.pipe(debug({ title: 'lint:js' }));
@@ -94,7 +91,7 @@ gulp.task('lint:js', function jsLinter() {
  *	 - NPM script: `npm run lint:sass`.
  */
 gulp.task('lint:sass', function sassLinter() {
-	return gulp.src(['**/*.scss', '!node_modules/**', '!docs/assets/dist/**'])
+	return gulp.src(['**/*.scss', '!node_modules/**', '!dist/**', '!docs/assets/dist/**'])
 		.pipe(sassLint()
 			.on('error', function(err) { console.error(err); this.emit('end'); }))
 		.pipe(sassLint.format())
@@ -116,10 +113,10 @@ gulp.task('lint:sass', function sassLinter() {
 gulp.task('lint', gulp.series('lint:js', 'lint:sass'));
 
 /**
- * Build JS.
+ * Build Docs JS.
  *
  * Process:
- *	 1. Runs the `lint` task. 
+ *	 1. Runs the `lint:js` task. 
  *	 2. Imports JS modules to file. 
  *	 3. Transpiles the file to CommonJS with Babel.
  *	 4. Minifies the file.
@@ -129,10 +126,10 @@ gulp.task('lint', gulp.series('lint:js', 'lint:sass'));
  *	 8. Logs created files to the console.
  *
  * Run:
- *	 - Global command: `gulp build:js`.
- *	 - Local command: `node ./node_modules/gulp/bin/gulp build:js`.
+ *	 - Global command: `gulp build:js:docs`.
+ *	 - Local command: `node ./node_modules/gulp/bin/gulp build:js:docs`.
  */
-gulp.task('build:js', gulp.series('lint:js', function jsBuilder() {
+gulp.task('build:js:docs', gulp.series('lint:js', function jsDocsBuilder() {
 	const bundler = browserify('docs/assets/src/js/main.js', { debug: true }).transform(babel, { presets: ['env'] });
 	return bundler.bundle()
 		.on('error', function(err) { console.error(err); this.emit('end'); })
@@ -143,8 +140,50 @@ gulp.task('build:js', gulp.series('lint:js', function jsBuilder() {
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('docs/assets/dist/js'))
-		.pipe(debug({ title: 'build:js' }));
+		.pipe(debug({ title: 'build:js:docs' }));
 }));
+
+/**
+ * Build Module JS.
+ *
+ * Process:
+ *	 1. Runs the `lint:js` task. 
+ *	 2. Imports JS modules to file. 
+ *	 3. Transpiles the file to CommonJS with Babel.
+ *	 4. Minifies the file.
+ *	 5. Renames the compiled file to *.min.js.
+ *	 6. Writes sourcemaps to initial content.
+ *	 7. Writes created files to the build directory.
+ *	 8. Logs created files to the console.
+ *
+ * Run:
+ *	 - Global command: `gulp build:js:module`.
+ *	 - Local command: `node ./node_modules/gulp/bin/gulp build:js:module`.
+ */
+gulp.task('build:js:module', gulp.series('lint:js', function jsModuleBuilder() {
+	const bundler = browserify('src/js/speckle.js', { debug: true }).transform(babel, { presets: ['env'] });
+	return bundler.bundle()
+		.on('error', function(err) { console.error(err); this.emit('end'); })
+		.pipe(source('speckle.js'))
+		.pipe(buffer())
+		.pipe(sourcemaps.init({ loadMaps: true }))
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest('dist/js'))
+		.pipe(debug({ title: 'build:js:module' }));
+}));
+
+/**
+ * Build all JS.
+ *
+ * Process:
+ *	 1. Runs the `build:js:module` task.
+ *	 2. Runs the `build:js:docs` task.
+ *	 
+ * Run:
+ *	 - Global command: `gulp build:js`.
+ *	 - Local command: `node ./node_modules/gulp/bin/gulp build:js`.
+ */
+gulp.task('build:js', gulp.series('build:js:module', 'build:js:docs'));
 
 /**
  * Build Sass.
@@ -207,7 +246,7 @@ gulp.task('watch', function watcher() {
 	// Lint js when gulpfile.js changes, but do not build. 
 	gulp.watch('gulpfile.js', gulp.series('lint:js'));
 	// Watch speckle.js file, and docs src js. Rebuild JS on change.
-	gulp.watch(['speckle.js', 'docs/assets/src/**/*.js'], gulp.series('build:js'));
+	gulp.watch(['src/speckle.js', 'docs/assets/src/**/*.js'], gulp.series('build:js'));
 	// Watch all docs src sass. Rebuild Sass on change.
 	gulp.watch(['docs/assets/src/**/*.scss'], gulp.series('build:sass'));
 });

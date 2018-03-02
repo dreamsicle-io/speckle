@@ -245,7 +245,7 @@ gulp.task('watch', function watcher() {
 	// Lint js when gulpfile.js changes, but do not build. 
 	gulp.watch('gulpfile.js', gulp.series('lint:js'));
 	// Watch speckle.js file, and docs src js. Rebuild JS on change.
-	gulp.watch(['src/speckle.js', 'docs/assets/src/**/*.js'], gulp.series('build:js'));
+	gulp.watch(['src/**/*.js', 'docs/assets/src/**/*.js'], gulp.series('build:js'));
 	// Watch all docs src sass. Rebuild Sass on change.
 	gulp.watch(['docs/assets/src/**/*.scss'], gulp.series('build:sass'));
 });

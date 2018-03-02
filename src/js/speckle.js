@@ -145,7 +145,7 @@ class Speckle {
 			message = 'The value must be between 1 and 100, and greater than `minOpacity`.';
 		}
 		throw new Error(
-			'Speckle.js [' + key + ']\n' + message
+			`Speckle.js [${key}]\n` + message
 		);
 	}
 
@@ -168,7 +168,7 @@ class Speckle {
 	 * @return {string}  A random hex color.
 	 */
 	getRandomHex() {
-		return '#' + ('000000' + Math.random().toString(16).slice(2, 8)).slice(-6).toUpperCase();
+		return `#${('000000' + Math.random().toString(16).slice(2, 8)).slice(-6).toUpperCase()}`;
 	}
 
 	getStyles(element) {
@@ -181,12 +181,12 @@ class Speckle {
 		// Create the styles object.
 		return Object.assign(this.globalStyles, {
 			backgroundColor: renderColor, 
-			boxShadow: isBokeh ? ('0 0 ' + (size / 3) + 'px ' + (size / 3) + 'px ' + renderColor) : '', 
-			height: size + 'px', 
-			left: 'calc(' + this.getRandomInt(0 - lrOffset, 100 + lrOffset) + '% - ' + center + 'px)', 
+			boxShadow: isBokeh ? `0 0 ${(size / 3)}px ${(size / 3)}px ${renderColor}` : '', 
+			height: `${size}px`, 
+			left: `calc(${this.getRandomInt(0 - lrOffset, 100 + lrOffset)}% - ${center}px)`, 
 			opacity: (this.getRandomInt(minOpacity, maxOpacity) * 0.01), 
-			top: 'calc(' + this.getRandomInt(0 - tbOffset, 100 + tbOffset) + '% - ' + center + 'px)', 
-			width: size + 'px', 
+			top: `calc(${this.getRandomInt(0 - tbOffset, 100 + tbOffset)}% - ${center}px)`, 
+			width: `${size}px`, 
 			zIndex: zIndex, 
 		});
 	}

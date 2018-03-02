@@ -15,7 +15,6 @@ const sass = require('gulp-sass');
 const sassLint = require('gulp-sass-lint');
 const autoprefixer = require('gulp-autoprefixer');
 
-
 /**
  * Clean module build directory.
  *
@@ -129,7 +128,7 @@ gulp.task('lint', gulp.series('lint:js', 'lint:sass'));
  *	 - Global command: `gulp build:js:docs`.
  *	 - Local command: `node ./node_modules/gulp/bin/gulp build:js:docs`.
  */
-gulp.task('build:js:docs', gulp.series('lint:js', function jsDocsBuilder() {
+gulp.task('build:js:docs', function jsDocsBuilder() {
 	const bundler = browserify('docs/assets/src/js/main.js', { debug: true }).transform(babel, { presets: ['env'] });
 	return bundler.bundle()
 		.on('error', function(err) { console.error(err); this.emit('end'); })
@@ -141,7 +140,7 @@ gulp.task('build:js:docs', gulp.series('lint:js', function jsDocsBuilder() {
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('docs/assets/dist/js'))
 		.pipe(debug({ title: 'build:js:docs' }));
-}));
+});
 
 /**
  * Build Module JS.
@@ -160,7 +159,7 @@ gulp.task('build:js:docs', gulp.series('lint:js', function jsDocsBuilder() {
  *	 - Global command: `gulp build:js:module`.
  *	 - Local command: `node ./node_modules/gulp/bin/gulp build:js:module`.
  */
-gulp.task('build:js:module', gulp.series('lint:js', function jsModuleBuilder() {
+gulp.task('build:js:module', function jsModuleBuilder() {
 	const bundler = browserify('src/js/speckle.js', { debug: true }).transform(babel, { presets: ['env'] });
 	return bundler.bundle()
 		.on('error', function(err) { console.error(err); this.emit('end'); })
@@ -170,7 +169,7 @@ gulp.task('build:js:module', gulp.series('lint:js', function jsModuleBuilder() {
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('dist/js'))
 		.pipe(debug({ title: 'build:js:module' }));
-}));
+});
 
 /**
  * Build all JS.
@@ -183,7 +182,7 @@ gulp.task('build:js:module', gulp.series('lint:js', function jsModuleBuilder() {
  *	 - Global command: `gulp build:js`.
  *	 - Local command: `node ./node_modules/gulp/bin/gulp build:js`.
  */
-gulp.task('build:js', gulp.series('build:js:module', 'build:js:docs'));
+gulp.task('build:js', gulp.series('lint:js', 'build:js:module', 'build:js:docs'));
 
 /**
  * Build Sass.
@@ -246,7 +245,7 @@ gulp.task('watch', function watcher() {
 	// Lint js when gulpfile.js changes, but do not build. 
 	gulp.watch('gulpfile.js', gulp.series('lint:js'));
 	// Watch speckle.js file, and docs src js. Rebuild JS on change.
-	gulp.watch(['src/speckle.js', 'docs/assets/src/**/*.js'], gulp.series('build:js'));
+	gulp.watch(['src/**/*.js', 'docs/assets/src/**/*.js'], gulp.series('build:js'));
 	// Watch all docs src sass. Rebuild Sass on change.
 	gulp.watch(['docs/assets/src/**/*.scss'], gulp.series('build:sass'));
 });

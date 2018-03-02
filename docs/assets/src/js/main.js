@@ -1,4 +1,7 @@
+// import ES6 Module from /src;
 import Speckle from '../../../../src/js/speckle';
+// import UMD Module from /dist;
+// const Speckle = require('../../../../dist/js/speckle');
 
 /**
  * Initialize masthead speckles.

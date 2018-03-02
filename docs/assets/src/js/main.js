@@ -7,8 +7,8 @@ import Speckle from '../../../../src/js/speckle';
  * @return {void} 
  */
 function initMastheadSpeckles() {
-	// Layer 2
-	new Speckle(document.querySelector('.speckle-masthead'), {
+	const masthead = document.querySelector('.speckle-masthead');
+	const mastheadSmall = new Speckle(masthead, {
 		quantity: 36, 
 		minSize: 4, 
 		maxSize: 64,
@@ -18,8 +18,7 @@ function initMastheadSpeckles() {
 		tbOffset: 4, 
 		zIndex: 5,
 	});
-	// Layer 1
-	new Speckle(document.querySelector('.speckle-masthead'), {
+	const mastheadLarge = new Speckle(masthead, {
 		quantity: 12, 
 		minSize: 256, 
 		maxSize: 768,
@@ -28,6 +27,12 @@ function initMastheadSpeckles() {
 		lrOffset: 2, 
 		tbOffset: 2, 
 		zIndex: 0,
+	});
+	const mastheadTitle = masthead.querySelector('.speckle-masthead__title a');
+	mastheadTitle.addEventListener('click', (e) => {
+		e.preventDefault();
+		mastheadSmall.rerender();
+		mastheadLarge.rerender();
 	});
 }
 
@@ -178,8 +183,8 @@ function initExampleSpeckles() {
 		maxSize: 64,
 		minOpacity: 100, 
 		maxOpacity: 100, 
-		tbOffset: 1, 
-		lrOffset: 1, 
+		tbOffset: 4, 
+		lrOffset: 4, 
 	});
 }
 
@@ -188,7 +193,7 @@ function initCopyrightDate() {
 	copyright.innerHTML = copyright.innerHTML.replace(/(%CURRENT_YEAR%)/g, new Date().getFullYear());
 }
 
-document.addEventListener('DOMContentLoaded', function(e) {
+document.addEventListener('DOMContentLoaded', (e) => {
 	initMastheadSpeckles();
 	initExampleSpeckles();
 	initSectionTitleSpeckles();

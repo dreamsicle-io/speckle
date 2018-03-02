@@ -33,10 +33,16 @@ var Speckle = function () {
 	function Speckle(element, options) {
 		_classCallCheck(this, Speckle);
 
+		// keep track of this instance number for use in 
+		// grouping the speckles, and the `destroy()` method.
+		this.instance = Speckle.instance;
+		// augment the instance count on the class, not the instance.
+		Speckle.instance++;
 		// throw error if `element` is not a valid HTML element.
 		if (!element || !(element instanceof Element)) {
 			this.throwElementError();
 		}
+		this.element = element;
 		// Set the default options.
 		this.defaultOptions = {
 			quantity: 56, // quantity of speckles
@@ -97,7 +103,7 @@ var Speckle = function () {
 		// Set the upgraded class.
 		this.upgradedClass = 'speckle--upgraded';
 		// Render speckles.
-		this.render(element);
+		this.render();
 	}
 
 	/**
@@ -204,17 +210,18 @@ var Speckle = function () {
 		}
 	}, {
 		key: 'getStyles',
-		value: function getStyles(element) {
-			var _options2 = this.options,
-			    minSize = _options2.minSize,
-			    maxSize = _options2.maxSize,
-			    tbOffset = _options2.tbOffset,
-			    lrOffset = _options2.lrOffset,
-			    minOpacity = _options2.minOpacity,
-			    maxOpacity = _options2.maxOpacity,
-			    color = _options2.color,
-			    isBokeh = _options2.isBokeh,
-			    zIndex = _options2.zIndex;
+		value: function getStyles() {
+			var globalStyles = this.globalStyles,
+			    options = this.options;
+			var minSize = options.minSize,
+			    maxSize = options.maxSize,
+			    tbOffset = options.tbOffset,
+			    lrOffset = options.lrOffset,
+			    minOpacity = options.minOpacity,
+			    maxOpacity = options.maxOpacity,
+			    color = options.color,
+			    isBokeh = options.isBokeh,
+			    zIndex = options.zIndex;
 			// size
 
 			var size = this.getRandomInt(minSize, maxSize);
@@ -222,7 +229,7 @@ var Speckle = function () {
 			// color
 			var renderColor = color || this.getRandomHex();
 			// Create the styles object.
-			return Object.assign(this.globalStyles, {
+			return Object.assign(globalStyles, {
 				backgroundColor: renderColor,
 				boxShadow: isBokeh ? '0 0 ' + size / 3 + 'px ' + size / 3 + 'px ' + renderColor : '',
 				height: size + 'px',
@@ -235,6 +242,93 @@ var Speckle = function () {
 		}
 
 		/**
+   * Destroy Speckle.
+   * 
+   * @return {void} 
+   */
+
+	}, {
+		key: 'destroy',
+		value: function destroy() {
+			var element = this.element,
+			    instance = this.instance,
+			    upgradedClass = this.upgradedClass;
+			// destroy the speckles related to this instance.
+
+			var speckles = element.querySelectorAll('[data-speckle-group="' + instance + '"]');
+			if (speckles && speckles.length > 0) {
+				speckles.forEach(function (speckle, i) {
+					element.removeChild(speckle);
+				});
+			}
+			// remove this instance from the `data-speckle-groups` 
+			// attribute on the container element. If none are left after
+			// removal, remove the attribute alltogether.
+			var groups = element.getAttribute('data-speckle-groups') || '';
+			// initialize the `cleanElement` var as false.
+			var cleanElement = false;
+			if (groups) {
+				// split the groups value by `,` and explode into an array.
+				var newGroups = groups.split(',');
+				// Using `splice()`, remove the index of this instance from
+				// the `newGroups` array. Note: this returns the removed node, 
+				// not the new array.
+				newGroups.splice(newGroups.indexOf(instance.toString()), 1);
+				// if there are any groups left after the removal, 
+				// set the `data-speckle-groups` attribute to the 
+				// new items as CSV. If there are no items left, remove 
+				// the attribute and set `cleanElement` to `true`.
+				if (newGroups.length > 0) {
+					element.setAttribute('data-speckle-groups', newGroups.join(','));
+				} else {
+					element.removeAttribute('data-speckle-groups');
+					cleanElement = true;
+				}
+			}
+			// fully clean the container element, but only if no speckle 
+			// groups are left on the container element by this point.
+			if (cleanElement) {
+				// if the CSS `position` of the container element was modified
+				// by this class, it will have added a `data-speckle-position-mod` 
+				// attribute set to `true` or the element's explicit CSS `position` 
+				// value if there was one on the element itself prior to the 
+				// first initialization.
+				var positionMod = element.getAttribute('data-speckle-position-mod');
+				if (positionMod) {
+					element.style.position = positionMod === 'true' ? null : positionMod;
+					element.removeAttribute('data-speckle-position-mod');
+				}
+				// remove the upgraded class.
+				element.classList.remove(upgradedClass);
+				// Remove the overflow mod. if the CSS `overflow` of the container 
+				// element was modified by this class, it will have added a 
+				// `data-speckle-overflow-mod` attribute set to `true` or the 
+				// element's explicit CSS `overflow` value if there was one 
+				// on the element itself prior to the first initialization.
+				var overflowMod = element.getAttribute('data-speckle-overflow-mod');
+				if (overflowMod) {
+					element.style.overflow = overflowMod === 'true' ? null : overflowMod;
+					element.removeAttribute('data-speckle-overflow-mod');
+				}
+			}
+		}
+
+		/**
+   * Destroy and rerender the speckles according
+   * to the same options. Simply runs the `destroy()`
+   * method followed by the `render()` method again.
+   * 
+   * @return {void} 
+   */
+
+	}, {
+		key: 'rerender',
+		value: function rerender() {
+			this.destroy();
+			this.render();
+		}
+
+		/**
    * Render the speckles.
    * 
    * @since  0.0.1
@@ -244,37 +338,58 @@ var Speckle = function () {
 
 	}, {
 		key: 'render',
-		value: function render(element) {
-			var _options3 = this.options,
-			    quantity = _options3.quantity,
-			    isCropped = _options3.isCropped,
-			    tagName = _options3.tagName,
-			    attributes = _options3.attributes;
+		value: function render() {
+			var element = this.element,
+			    instance = this.instance,
+			    options = this.options,
+			    upgradedClass = this.upgradedClass;
+			var quantity = options.quantity,
+			    isCropped = options.isCropped,
+			    tagName = options.tagName,
+			    attributes = options.attributes;
 
 			var _window$getComputedSt = window.getComputedStyle(element),
-			    position = _window$getComputedSt.position;
-			// add the upgraded class.
+			    position = _window$getComputedSt.position,
+			    overflow = _window$getComputedSt.overflow;
 
-
-			element.classList.add(this.upgradedClass);
-			// add relative positioning to the element if it 
-			// is not already `relative`, `fixed`, or `absolute`.
-			if (['relative, absolute, fixed'].indexOf(position) === -1) {
+			var isUpgraded = element.classList.contains(upgradedClass);
+			// Set the instance of this class as `data-speckle-group` 
+			// incase it needs to be accessed by other scripts. Get the value 
+			// and append rather than overwriting as this value can be a CSV 
+			// list of speckle groups.
+			var oldGroups = element.getAttribute('data-speckle-groups') || '';
+			var newGroups = oldGroups ? [oldGroups, instance].join(',') : instance;
+			element.setAttribute('data-speckle-groups', newGroups);
+			// only add relative positioning to the container element if 
+			// it is not already `relative`, `fixed`, or `absolute`.
+			if (!isUpgraded && ['relative, absolute, fixed'].indexOf(position) === -1) {
+				// on the container element, save the fact that the CSS `position` has 
+				// been modified as a `data-speckle-position-mod` attribute set to `true` 
+				// or the explicit `position` value if there is one.
+				element.setAttribute('data-speckle-position-mod', element.style.position || true);
+				// set the CSS `position`value to `relative` so that the speckles 
+				// (which are positioned absolute) know where to live.
 				element.style.position = 'relative';
 			}
-			// Add `overflow: hidden;` to element if `isCropped` is `true`.
-			if (isCropped) {
+			// Add `overflow: hidden;` to element if `isCropped` is `true`, if
+			// overflows are not already hidden on the container element.
+			if (!isUpgraded && isCropped && ['hidden'].indexOf(overflow) === -1) {
+				element.setAttribute('data-speckle-overflow-mod', element.style.overflow || true);
 				element.style.overflow = 'hidden';
 			}
 			// render speckles according to quantity.
 			for (var i = 1; i <= quantity; i++) {
 				// Create speckle element according to the `tagName` option.
 				var speckle = document.createElement(tagName);
-				// Set the index of this attribute as `data-speckle-index` 
+				// Set the index of this speckle as `data-speckle-index` 
 				// incase it needs to be accessed by other scripts.
 				speckle.setAttribute('data-speckle-index', i);
+				// Set the speckle group as `data-speckle-group` attribute
+				// incase it needs to be accessed by other scripts, and
+				// for use in the `destroy()` method.
+				speckle.setAttribute('data-speckle-group', instance);
 				// Get speckle styles.
-				var styles = this.getStyles(element);
+				var styles = this.getStyles();
 				// loop over the speckle style object keys and apply the styles.
 				if (styles && (typeof styles === 'undefined' ? 'undefined' : _typeof(styles)) === 'object') {
 					for (var styleKey in styles) {
@@ -290,11 +405,17 @@ var Speckle = function () {
 				// Append the speckle to the container element.
 				element.appendChild(speckle);
 			}
+			// add the upgraded class.
+			if (!isUpgraded) {
+				element.classList.add(upgradedClass);
+			}
 		}
 	}]);
 
 	return Speckle;
 }();
+
+Speckle.instance = 1;
 
 exports.default = Speckle;
 

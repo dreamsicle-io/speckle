@@ -4,11 +4,11 @@
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114908024-1"></script>
 		<script>
-			// global config.
+			// Google Analytics - Dreamsicle config.
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
 			gtag('js', new Date());
-			// Site specific config.
+			// Google Analytics - Speckle specific config.
 			gtag('config', 'UA-114908024-1');
 		</script>
 		<!-- END Global site tag (gtag.js) - Google Analytics -->
@@ -18,23 +18,31 @@
 		<link rel="stylesheet" href="https://use.typekit.net/wrh4zgr.css">
 		<link rel="stylesheet" href="assets/dist/css/main.min.css" />
 	</head>
-	<body itemscope="http://schema.org/SoftwareApplication">
-		<header id="#top" class="speckle-masthead">
-			<div class="speckle-masthead__links">
-				<a href="https://github.com/dreamsiclemedia/speckle" title="View on GitHub" itemprop="installUrl">
-					<img src="assets/github.svg" width="48px" height="48px" alt="View on GitHub" />
-				</a>
-			</div>
-			<div class="speckle-masthead__inner">
-				<h1 class="speckle-masthead__title" itemprop="name">
-					<a href="/" itemprop="url" rel="bookmark">Speckle.js</a>
-				</h1>
-				<p class="speckle-masthead__tagline" itemprop="alternativeHeadline">A JavaScript module that adds responsive, stylized speckles to any element; with no dependencies.</p>
-				<a href="#getting_started" class="speckle-button">Get Started</a>
-			</div>
-		</header>
-		<main>
-			<article>
+	<body>
+		<article itemscope="http://schema.org/SoftwareApplication">
+			<header id="#top" class="speckle-masthead">
+				<div class="speckle-masthead__links">
+					<a href="https://www.npmjs.com/package/speckle-js" title="View on NPM" itemprop="installUrl" class="speckle-masthead__link speckle-masthead__link--npm">
+						<img src="assets/npm.svg" alt="View on NPM" />
+					</a>
+					<a href="https://github.com/dreamsiclemedia/speckle" title="View on GitHub" itemprop="installUrl" class="speckle-masthead__link speckle-masthead__link--github">
+						<img src="assets/github.svg" alt="View on GitHub" />
+					</a>
+				</div>
+				<div class="speckle-masthead__inner">
+					<h1 class="speckle-masthead__title" itemprop="name">
+						<a href="/" itemprop="url" rel="bookmark">Speckle.js</a>
+					</h1>
+					<p class="speckle-masthead__tagline" itemprop="alternativeHeadline">A JavaScript module that adds responsive, stylized speckles to any element; with no dependencies.</p>
+					<a href="#getting_started" class="speckle-button">Get Started</a>
+					<div class="speckle-masthead__anchors">
+						<a href="#options">Options</a> 
+						<span class="speckle-masthead__anchors-sep">|</span> 
+						<a href="#examples">Examples</a>
+					</div>
+				</div>
+			</header>
+			<main>
 				<section id="getting_started" class="speckle-section speckle-section--getting-started" itemprop="text">
 					<div class="speckle-section__inner">
 						<h2 class="speckle-section__title">Getting Started</h2>
@@ -161,18 +169,18 @@
 						<div class="speckle-demo" id="cheese" style="background-color: #fff700;"><h3>Cheese</h3></div>
 					</div>
 				</section>
-			</article>
-		</main>
-		<footer class="speckle-colophon">
-			<div class="speckle-colophon__bottom">
-				<p id="copyright">
-					&copy; 
-					<span itemprop="copyrightYear">%CURRENT_YEAR%</span> 
-					<a href="https://github.com/dreamsiclemedia" itemprop="copyrightHolder">Dreamsicle</a>
-				</p>
-				<p><a href="https://github.com/dreamsiclemedia">Flavored by <span itemprop="creator">Dreamsicle</span></a></p>
-			</div>
-		</footer>
+			</main>
+			<footer class="speckle-colophon">
+				<div class="speckle-colophon__bottom">
+					<p id="copyright">
+						&copy; 
+						<span itemprop="copyrightYear">%CURRENT_YEAR%</span> 
+						<a href="https://github.com/dreamsiclemedia" itemprop="copyrightHolder">Dreamsicle</a>
+					</p>
+					<p><a href="https://github.com/dreamsiclemedia">Flavored by <span itemprop="creator">Dreamsicle</span></a></p>
+				</div>
+			</footer>
+		</article>
 		<script src="assets/dist/js/main.min.js"></script>
 	</body>
 </html>

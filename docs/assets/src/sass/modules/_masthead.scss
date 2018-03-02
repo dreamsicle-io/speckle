@@ -25,6 +25,7 @@
 
 		a {
 			color: inherit;
+			outline: 0;
 			text-decoration: none;
 		}
 	}
@@ -53,6 +54,42 @@
 			right: $gutter--desktop;
 			top: $gutter--desktop;
 		}
+
+	}
+
+	&__link {
+		display: inline-block;
+		margin-left: 24px;
+		vertical-align: middle;
+
+		img {
+			display: block;
+			height: 40px;
+			width: auto;
+		}
+
+		&--npm {
+			img {
+				height: 32px;
+				margin-top: 4px;
+			}
+		}
+	}
+
+	&__anchors {
+		margin-top: 24px;
+		position: relative;
+		z-index: 10;
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+	}
+
+	&__anchors-sep {
+		margin: 0 8px;
+		opacity: 0.64;
 	}
 
 	.speckle-button {

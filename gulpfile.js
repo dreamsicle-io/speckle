@@ -160,7 +160,13 @@ gulp.task('build:js:docs', function jsDocsBuilder() {
  *	 - Local command: `node ./node_modules/gulp/bin/gulp build:js:module`.
  */
 gulp.task('build:js:module', function jsModuleBuilder() {
-	const bundler = browserify('src/js/speckle.js', { debug: true }).transform(babel, { presets: ['env'] });
+	const bundler = browserify('src/js/speckle.js', { 
+		standalone: 'Speckle', 
+		debug: true 
+	}).transform(babel, { 
+		presets: ['env'], 
+		plugins: ['add-module-exports'] 
+	});
 	return bundler.bundle()
 		.on('error', function(err) { console.error(err); this.emit('end'); })
 		.pipe(source('speckle.js'))

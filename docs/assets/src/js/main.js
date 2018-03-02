@@ -1,6 +1,4 @@
-'use-strict';
-
-import Speckle from '../../../../speckle.js';
+import Speckle from '../../../../src/js/speckle';
 
 /**
  * Initialize masthead speckles.

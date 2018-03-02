@@ -10,9 +10,13 @@ A JavaScript module that adds responsive, stylized speckles to any element; with
 
 ### Usage
 
-Import the module.
+Import the module using ES6.
 
 `import Speckle from 'speckle-js';`
+
+The module can also be required using CommonJS.
+
+`const Speckle = require('speckle-js');`
 
 Use the constructor by passing a valid HTML element as the first argument, and an options object of `key: value` pairs as the second argument.
 

@@ -6,7 +6,7 @@ A JavaScript module that adds responsive, stylized speckles to any element; with
 
 ### Installation
 
-`npm install --save speckle-js`
+`npm install speckle-js`
 
 ### Usage
 
@@ -24,4 +24,4 @@ Use the constructor by passing a valid HTML element as the first argument, and a
 
 ## Options
 
-Visit the [documentation and examples](http://speckle.dreamsicle.io) for all options and how to use them.
+Visit the [documentation and examples](http://speckle.dreamsicle.io) for all options, methods, and how to use them.

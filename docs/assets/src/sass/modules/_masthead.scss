@@ -4,7 +4,7 @@
 	color: $color--text-on-dark;
 	display: flex;
 	flex-flow: column;
-	height: 90vh;
+	min-height: 90vh;
 	justify-content: center;
 
 	&::before,
@@ -13,15 +13,20 @@
 	}
 
 	&__inner {
+    	padding: 96px 0 64px;
 		position: relative;
 		text-align: center;
 	}
 
 	&__title {
-		font-size: 4em;
+		font-size: 3em;
 		margin: 0;
 		position: relative;
 		z-index: 2;
+
+		@media screen and (min-width: 768px) {
+			font-size: 4em;
+		}
 
 		a {
 			color: inherit;
@@ -32,10 +37,15 @@
 
 	&__tagline {
 		@include contain('tablet');
-		font-size: 1.64em;
-		max-width: 564px;
+		font-size: 1.28em;
+		max-width: 400px;
 		position: relative;
 		z-index: 2;
+
+		@media screen and (min-width: 768px) {
+			max-width: 528px;
+			font-size: 1.64em;
+		}
 	}
 
 	&__links {

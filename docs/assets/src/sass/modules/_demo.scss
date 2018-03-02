@@ -1,6 +1,9 @@
 .speckle-demo {
+	align-items: flex-start;
 	background-color: $color--light-dark;
 	color: $color--text-on-light-dark;
+	display: flex;
+	flex-flow: row;
 	height: 300px;
 	margin: 80px auto 360px;
 	max-width: 600px;
@@ -14,8 +17,8 @@
 		display: inline-block;
 		font-family: sans-serif;
 		line-height: 1;
-		margin: 15px;
-		padding: 10px 15px;
+		margin: 16px;
+		padding: 12px 16px;
 		position: relative;
 		z-index: 10;
 	}

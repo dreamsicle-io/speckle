@@ -1,5 +1,7 @@
 // Import dependencies.
 @import 'normalize-css/normalize';
+@import 'codemirror/lib/codemirror';
+@import 'codemirror/theme/cobalt';
 
 // Import variables and mixins.
 @import 'mixins';
@@ -12,3 +14,4 @@
 @import 'modules/section';
 @import 'modules/demo';
 @import 'modules/button';
+@import 'modules/codemirror';

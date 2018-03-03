@@ -1,0 +1,128 @@
+extends layouts/default
+
+block head
+	//- Google Analytics
+	script(async src="https://www.googletagmanager.com/gtag/js?id=UA-114908024-1")
+	script.
+		window.dataLayer = window.dataLayer || []; 
+		function gtag(){dataLayer.push(arguments);} 
+		gtag('js', new Date()); 
+		gtag('config', 'UA-114908024-1');
+	//- Doc title
+	title Speckle.js
+	//- Styles
+	link(rel="stylesheet" href="https://use.typekit.net/wrh4zgr.css")
+	link(rel="stylesheet" href="assets/dist/css/main.min.css")
+
+block masthead
+	header#top.speckle-masthead
+		div.speckle-masthead__links
+			a.speckle-masthead__link.speckle-masthead__link--npm(href="https://www.npmjs.com/package/speckle-js" title="View on NPM" itemprop="installUrl")
+				img(src="assets/npm.svg" alt="View on NPM")
+			a.speckle-masthead__link.speckle-masthead__link--github(href="https://github.com/dreamsiclemedia/speckle" title="View on GitHub" itemprop="installUrl")
+				img(src="assets/github.svg" alt="View on GitHub")
+		div.speckle-masthead__inner
+			h1.speckle-masthead__title(itemprop="name")
+				a(href="/" itemprop="url" rel="bookmark") Speckle.js
+			p.speckle-masthead__tagline(itemprop="alternativeHeadline")= speckle.description
+			a.speckle-button(href="#getting_started") Get Started
+			div.speckle-masthead__anchors
+				a(href="#options") Options
+				span.speckle-masthead__anchors-sep &nbsp;|&nbsp;
+				a(href="#examples") Examples
+
+block content
+	section#getting_started.speckle-section.speckle-section--getting-started(itemprop="text")
+		div.speckle-section__inner
+			include:markdown-it(langPrefix='speckle-code--') ../content/getting-started.md
+
+	section#options.speckle-section.speckle-section--options(itemprop="featureList")
+		div.speckle-section__inner
+			h2 Options
+			div.speckle-section__scroller
+				table.speckle-options-table
+					thead
+						tr
+							th Option
+							th Type
+							th Default
+							th Description
+					tbody
+						each option, i in options
+							tr
+								td
+									code= option.key
+								td 
+									em= option.type
+								td
+									code= option.defaultValue
+								td
+									small
+										!= markdown.render(option.description)
+
+
+	section#examples.speckle-section.speckle-section--examples(itemprop="workExample")
+		div.speckle-section__inner
+			h2 Examples
+			div
+				div#default.speckle-demo
+					h3 Default
+				include:markdown-it(langPrefix='speckle-code--') ../content/example-default.md
+			div
+				div#large.speckle-demo(style="margin: 224px auto;") 
+					h3 Large
+				include:markdown-it(langPrefix='speckle-code--') ../content/example-large.md
+			div
+				div#small.speckle-demo
+					h3 Small
+				include:markdown-it(langPrefix='speckle-code--') ../content/example-small.md
+			div
+				div#mono.speckle-demo
+					h3 Mono
+				include:markdown-it(langPrefix='speckle-code--') ../content/example-mono.md
+			div
+				div#alot.speckle-demo
+					h3 A Lot
+				include:markdown-it(langPrefix='speckle-code--') ../content/example-alot.md
+			div
+				div#alittle.speckle-demo
+					h3 A Little
+				include:markdown-it(langPrefix='speckle-code--') ../content/example-alittle.md
+			div
+				div#deco.speckle-demo(style="margin: 360px auto;")
+					h3 Art Deco
+				include:markdown-it(langPrefix='speckle-code--') ../content/example-deco.md
+			div
+				div#crop.speckle-demo
+					h3 Crop
+				include:markdown-it(langPrefix='speckle-code--') ../content/example-crop.md
+			div
+				div#bokeh.speckle-demo
+					h3 Bokeh
+				include:markdown-it(langPrefix='speckle-code--') ../content/example-bokeh.md
+			div
+				div#multi.speckle-demo(style="margin: 256px auto;")
+					h3 Multi
+				include:markdown-it(langPrefix='speckle-code--') ../content/example-multi.md
+			div
+				div#space.speckle-demo(style="background-color: #000000;")
+					h3 Space
+				include:markdown-it(langPrefix='speckle-code--') ../content/example-space.md
+			div
+				div#cheese.speckle-demo(style="background-color: #fff700;")
+					h3 Cheese
+				include:markdown-it(langPrefix='speckle-code--') ../content/example-cheese.md
+
+block colophon
+	footer.speckle-colophon
+		div.speckle-colophon__bottom
+			p#copyright &copy; 
+				span(itemprop="copyrightYear") %CURRENT_YEAR%
+				a(href="https://github.com/dreamsiclemedia" itemprop="copyrightHolder")= speckle.author
+			p
+				a(href="https://github.com/dreamsiclemedia") Flavored by 
+					span(itemprop="creator")= speckle.author
+
+block foot
+	//- Scripts
+	script(src="assets/dist/js/main.min.js")

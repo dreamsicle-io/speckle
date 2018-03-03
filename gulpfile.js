@@ -1,5 +1,6 @@
 'use-strict';
 
+const fs = require('fs');
 const del = require('del');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
@@ -14,6 +15,9 @@ const eslint = require('gulp-eslint');
 const sass = require('gulp-sass');
 const sassLint = require('gulp-sass-lint');
 const autoprefixer = require('gulp-autoprefixer');
+const pug = require('gulp-pug');
+const htmlmin = require('gulp-htmlmin');
+const markdown = require('markdown-it')();
 
 /**
  * Clean module build directory.
@@ -30,10 +34,10 @@ gulp.task('clean:module', function moduleCleaner(done) {
 });
 
 /**
- * Clean Docs build directory.
+ * Clean docs build directory.
  *
  * Process:
- *	 1. Deletes the Docs build directory.
+ *	 1. Deletes the docs build directory.
  *
  * Run:
  *	 - Global command: `gulp clean:docs`.
@@ -44,7 +48,21 @@ gulp.task('clean:docs', function docsCleaner(done) {
 });
 
 /**
- * Clean Docs build directory.
+ * Clean docs root index.html file.
+ *
+ * Process:
+ *	 1. Deletes the docs root index.html file.
+ *
+ * Run:
+ *	 - Global command: `gulp clean:html`.
+ *	 - Local command: `node ./node_modules/gulp/bin/gulp clean:html`.
+ */
+gulp.task('clean:html', function htmlCleaner(done) {
+	return del('docs/index.html', done());
+});
+
+/**
+ * Clean docs build directory.
  *
  * Process:
  *	 1. Runs the `clean:module` task.
@@ -55,7 +73,7 @@ gulp.task('clean:docs', function docsCleaner(done) {
  *	 - Local command: `node ./node_modules/gulp/bin/gulp clean`.
  *	 - NPM command: `npm run clean`.
  */
-gulp.task('clean', gulp.series('clean:module', 'clean:docs'));
+gulp.task('clean', gulp.series('clean:module', 'clean:docs', 'clean:html'));
 
 /**
  * Lint all JS files.
@@ -112,12 +130,12 @@ gulp.task('lint:sass', function sassLinter() {
 gulp.task('lint', gulp.series('lint:js', 'lint:sass'));
 
 /**
- * Build Docs JS.
+ * Build docs JS.
  *
  * Process:
  *	 1. Runs the `lint:js` task. 
  *	 2. Imports JS modules to file. 
- *	 3. Transpiles the file to CommonJS with Babel.
+ *	 3. Transpiles the file to CommonJS with Browserify and Babel.
  *	 4. Minifies the file.
  *	 5. Renames the compiled file to *.min.js.
  *	 6. Writes sourcemaps to initial content.
@@ -146,14 +164,13 @@ gulp.task('build:js:docs', function jsDocsBuilder() {
  * Build Module JS.
  *
  * Process:
- *	 1. Runs the `lint:js` task. 
- *	 2. Imports JS modules to file. 
- *	 3. Transpiles the file to CommonJS with Babel.
- *	 4. Minifies the file.
- *	 5. Renames the compiled file to *.min.js.
- *	 6. Writes sourcemaps to initial content.
- *	 7. Writes created files to the build directory.
- *	 8. Logs created files to the console.
+ *	 1. Imports JS modules to file. 
+ *	 2. Transpiles the file to CommonJS with Browserify and Babel.
+ *	 3. Minifies the file.
+ *	 4. Renames the compiled file to *.min.js.
+ *	 5. Writes sourcemaps to initial content.
+ *	 6. Writes created files to the build directory.
+ *	 7. Logs created files to the console.
  *
  * Run:
  *	 - Global command: `gulp build:js:module`.
@@ -221,6 +238,40 @@ gulp.task('build:sass', gulp.series('lint:sass', function sassBuilder() {
 }));
 
 /**
+ * Build Docs HTML.
+ *
+ * Process:
+ *	 1. Imports all HTML partials to file.
+ *	 2. Minifies all HTML.
+ *	 3. Writes minified html to /docs root.
+ *
+ * Run:
+ *	 - Global command: `gulp build:html`.
+ *	 - Local command: `node ./node_modules/gulp/bin/gulp build:html`.
+ */
+gulp.task('build:html', function htmlBuilder() {
+	const locals = {
+		// ensure the file is read synchronously and 
+		// parsed as json. require() is not sufficient.
+		speckle: JSON.parse(fs.readFileSync('package.json')), 
+		options: JSON.parse(fs.readFileSync('docs/content/options.json')), 
+		// include markdown as a function because filters
+		// do not work with variables in pug. Note: this is used for
+		// rendering markdown in json data like the description key
+		// in the options table. for all other markdown uses in pug,
+		// use the filter as `:markdown-it()`.
+		markdown: markdown, 
+	};
+	return gulp.src('docs/views/*.pug')
+		.pipe(pug({ locals: locals })
+			.on('error', function(err) { console.error(err); this.emit('end'); }))
+		.pipe(htmlmin({ collapseWhitespace: true, minifyJS: true, minifyCSS: true })
+			.on('error', function(err) { console.error(err); this.emit('end'); }))
+		.pipe(gulp.dest('docs'))
+		.pipe(debug({ title: 'build:html' }));
+});
+
+/**
  * Build all assets.
  *
  * Process:
@@ -232,15 +283,16 @@ gulp.task('build:sass', gulp.series('lint:sass', function sassBuilder() {
  *	 - Local command: `node ./node_modules/gulp/bin/gulp build`.
  *	 - NPM command: `npm run build`.
  */
-gulp.task('build', gulp.series('build:js', 'build:sass'));
+gulp.task('build', gulp.series('build:js', 'build:sass', 'build:html'));
 
 /**
  * Watch source files. Lint and build on change.
  *
  * Process:
  *	 1. Runs the `lint:js` task when this file changes.
- *	 2. Runs the `lint:js` and `build:js` tasks in series when `speckle.js`, and docs source js changes.
- *	 3. Runs the `lint:sass` and `build:sass` tasks in series when docs source Sass changes.
+ *	 2. Runs the `build:js` tasks in series when module and docs source js changes.
+ *	 3. Runs the `build:sass` task when docs source Sass changes.
+ *	 4. Runs the `build:html` task when docs source html changes.
  * 
  * Run: 
  *	 - Global command: `gulp watch`.
@@ -254,6 +306,8 @@ gulp.task('watch', function watcher() {
 	gulp.watch(['src/**/*.js', 'docs/assets/src/**/*.js'], gulp.series('build:js'));
 	// Watch all docs src sass. Rebuild Sass on change.
 	gulp.watch(['docs/assets/src/**/*.scss'], gulp.series('build:sass'));
+	// Watch all docs src pug and markdown files. Rebuild HTML on change.
+	gulp.watch(['docs/views/**/*.pug', 'docs/content/**/*.+(md|json)'], gulp.series('build:html'));
 });
 
 /**

@@ -4,6 +4,82 @@
 // const Speckle = require('../../../../dist/js/speckle');
 // import UMD Module from /dist via ES6;
 import Speckle from '../../../../dist/js/speckle';
+import CodeMirror from 'codemirror/lib/codemirror';
+import 'codemirror/mode/xml/xml';
+import 'codemirror/mode/css/css';
+import 'codemirror/mode/sass/sass';
+import 'codemirror/mode/htmlmixed/htmlmixed';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/shell/shell';
+
+function initCodemirror() {
+	function decodeHTML(html){
+		let decoder = document.createElement('div');
+		decoder.innerHTML = html;
+		return (decoder.childNodes.length === 0) ? '' : decoder.childNodes[0].nodeValue;
+	}
+	// html
+	const htmlCodes = document.querySelectorAll('.speckle-code--html');
+	if (htmlCodes && htmlCodes.length > 0) {
+		htmlCodes.forEach((htmlCode, i) => {
+			new CodeMirror((mirror) => {
+				htmlCode.parentNode.replaceChild(mirror, htmlCode);
+			}, {
+				mode: 'htmlmixed', 
+				value: decodeHTML(htmlCode.innerHTML), 
+				theme: 'cobalt speckle', 
+				readOnly: true, 
+				lineNumbers: true, 
+			});
+		});
+	}
+	// javascript
+	const jsCodes = document.querySelectorAll('.speckle-code--js');
+	if (jsCodes && jsCodes.length > 0) {
+		jsCodes.forEach((jsCode, i) => {
+			new CodeMirror((mirror) => {
+				jsCode.parentNode.replaceChild(mirror, jsCode);
+			}, {
+				mode:  'javascript', 
+				value: jsCode.innerHTML, 
+				theme: 'cobalt speckle', 
+				readOnly: true, 
+				lineNumbers: true, 
+			});
+		});
+	}
+	// javascript (JSON)
+	const jsonCodes = document.querySelectorAll('.speckle-code--json');
+	if (jsonCodes && jsonCodes.length > 0) {
+		jsonCodes.forEach((jsonCode, i) => {
+			new CodeMirror((mirror) => {
+				jsonCode.parentNode.replaceChild(mirror, jsonCode);
+			}, {
+				mode:  'javascript', 
+				json: true, 
+				value: jsonCode.innerHTML, 
+				theme: 'cobalt speckle', 
+				readOnly: true, 
+				lineNumbers: true, 
+			});
+		});
+	}
+	// shell
+	const shellCodes = document.querySelectorAll('.speckle-code--shell');
+	if (shellCodes && shellCodes.length > 0) {
+		shellCodes.forEach((shellCode, i) => {
+			new CodeMirror((mirror) => {
+				shellCode.parentNode.replaceChild(mirror, shellCode);
+			}, {
+				mode:  'shell', 
+				value: shellCode.innerHTML, 
+				theme: 'cobalt speckle', 
+				readOnly: true, 
+				lineNumbers: true, 
+			});
+		});
+	}
+}
 
 /**
  * Initialize masthead speckles.
@@ -48,7 +124,7 @@ function initMastheadSpeckles() {
  * @return {void} 
  */
 function initSectionTitleSpeckles() {
-	const titles = document.querySelectorAll('.speckle-section__title');
+	const titles = document.querySelectorAll('.speckle-section h2');
 	if (titles && (titles.length > 0)) {
 		titles.forEach((title, i) => {
 			new Speckle(title, {
@@ -203,4 +279,5 @@ document.addEventListener('DOMContentLoaded', (e) => {
 	initExampleSpeckles();
 	initSectionTitleSpeckles();
 	initCopyrightDate();
+	initCodemirror();
 });

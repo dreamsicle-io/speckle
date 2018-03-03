@@ -1,0 +1,68 @@
+[
+	{
+		"key": "quantity", 
+		"type": "int", 
+		"defaultValue": 56, 
+		"description": "Quantity of speckles."
+	}, {
+		"key": "minSize", 
+		"type": "int", 
+		"defaultValue": 4, 
+		"description": "The smallest speckle (px). Must be greater than `1` and less than `maxSize`"
+	}, {
+		"key": "maxSize", 
+		"type": "int", 
+		"defaultValue": 56, 
+		"description": "The largest speckle (px). Must be greater than `1` and greater than `minSize`"
+	}, {
+		"key": "tbOffset", 
+		"type": "float", 
+		"defaultValue": 8, 
+		"description": "Top/Bottom offset (%). Must be greater than or equal to `0`. This is the maxiumum distance that speckles can be rendered from the top/bottom of the container element."
+	}, {
+		"key": "lrOffset", 
+		"type": "float", 
+		"defaultValue": 8, 
+		"description": "Left/Right offset (%). Must be greater than or equal to `0`. This is the maximum distance that speckles can be rendered from the left/right of the container element."
+	}, {
+		"key": "minOpacity", 
+		"type": "float", 
+		"defaultValue": 12.5, 
+		"description": "The most transparent a speckle can be (%). This is a percentage where `100` means 100% opacity, and `0` means 0% opacity. This must be between `0` and `100`, and less than `maxOpacity`"
+	}, {
+		"key": "maxOpacity", 
+		"type": "float", 
+		"defaultValue": 87.5, 
+		"description": "The most opaque a speckle can be (%). This is a percentage where `100` means 100% opacity, and `0` means 0% opacity. This must be between `0` and `100`, and greater than `minOpacity`"
+	}, {
+		"key": "isBokeh", 
+		"type": "bool", 
+		"defaultValue": false, 
+		"description": "Whether the speckles should blur as a factor of distance (Bokeh lights effect) or not."
+	}, {
+		"key": "color", 
+		"type": "string", 
+		"defaultValue": "", 
+		"description": "The speckle color. If this is a falsy value, a random hex color will be generated using Speckle's `getRandomHex()` method."
+	}, {
+		"key": "zIndex", 
+		"type": "int", 
+		"defaultValue": 0, 
+		"description": "The CSS `z-index` of the speckles."
+	}, {
+		"key": "isCropped", 
+		"type": "bool", 
+		"defaultValue": false, 
+		"description": "Whether to apply `overflow: hidden;` to the container element or not."
+	}, {
+		"key": "tagName", 
+		"type": "string", 
+		"defaultValue": "I", 
+		"description": "What HTML tag name the speckles should be rendered as. This string must be capitalized."
+	}, {
+		"key": "attributes", 
+		"type": "obj", 
+		"defaultValue": null, 
+		"description": "An object of valid HTML attributes as `key: value` pairs to be added to the speckles."
+	}
+]

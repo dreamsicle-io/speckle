@@ -17,8 +17,14 @@ code {
 	background-color: $color--light-dark;
 	color: $color--text-on-light-dark;
 	cursor: text;
+	display: inline-block;
+	font-family: monospace;
 	font-size: 90%;
+	font-weight: bold;
 	padding: 0.1em 0.4em;
+	position: relative;
+	top: -1px;
+	vertical-align: baseline;
 }
 
 a,

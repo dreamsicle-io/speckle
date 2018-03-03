@@ -1,0 +1,16 @@
+// sass-lint:disable class-name-format
+
+.CodeMirror {
+	&.cm-s-speckle {
+		background: $color--primary-dark;
+		height: auto;
+
+		.CodeMirror-gutters {
+			background: $color--primary-dark;
+		}
+
+		.cm-comment {
+			color: $color--primary-light;
+		}
+	}
+}

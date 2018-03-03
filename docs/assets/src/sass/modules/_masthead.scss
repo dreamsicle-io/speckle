@@ -4,8 +4,8 @@
 	color: $color--text-on-dark;
 	display: flex;
 	flex-flow: column;
-	min-height: 90vh;
 	justify-content: center;
+	min-height: 90vh;
 
 	&::before,
 	&::after {
@@ -13,7 +13,7 @@
 	}
 
 	&__inner {
-    	padding: 96px 0 64px;
+		padding: 96px 0 64px;
 		position: relative;
 		text-align: center;
 	}
@@ -43,8 +43,8 @@
 		z-index: 2;
 
 		@media screen and (min-width: 768px) {
-			max-width: 528px;
 			font-size: 1.64em;
+			max-width: 528px;
 		}
 	}
 

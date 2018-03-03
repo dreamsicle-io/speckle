@@ -1,5 +1,6 @@
 'use-strict';
 
+const fs = require('fs');
 const del = require('del');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
@@ -14,8 +15,9 @@ const eslint = require('gulp-eslint');
 const sass = require('gulp-sass');
 const sassLint = require('gulp-sass-lint');
 const autoprefixer = require('gulp-autoprefixer');
-const fileinclude = require('gulp-file-include');
+const pug = require('gulp-pug');
 const htmlmin = require('gulp-htmlmin');
+const markdown = require('markdown-it')();
 
 /**
  * Clean module build directory.
@@ -248,10 +250,22 @@ gulp.task('build:sass', gulp.series('lint:sass', function sassBuilder() {
  *	 - Local command: `node ./node_modules/gulp/bin/gulp build:html`.
  */
 gulp.task('build:html', function htmlBuilder() {
-	return gulp.src('docs/views/index.html')
-		.pipe(fileinclude({ prefix: '@_' })
+	const locals = {
+		// ensure the file is read synchronously and 
+		// parsed as json. require() is not sufficient.
+		speckle: JSON.parse(fs.readFileSync('package.json')), 
+		options: JSON.parse(fs.readFileSync('docs/content/options.json')), 
+		// include markdown as a function because filters
+		// do not work with variables in pug. Note: this is used for
+		// rendering markdown in json data like the description key
+		// in the options table. for all other markdown uses in pug,
+		// use the filter as `:markdown-it()`.
+		markdown: markdown, 
+	};
+	return gulp.src('docs/views/*.pug')
+		.pipe(pug({ locals: locals })
 			.on('error', function(err) { console.error(err); this.emit('end'); }))
-		.pipe(htmlmin({ collapseWhitespace: true })
+		.pipe(htmlmin({ collapseWhitespace: true, minifyJS: true, minifyCSS: true })
 			.on('error', function(err) { console.error(err); this.emit('end'); }))
 		.pipe(gulp.dest('docs'))
 		.pipe(debug({ title: 'build:html' }));
@@ -292,8 +306,8 @@ gulp.task('watch', function watcher() {
 	gulp.watch(['src/**/*.js', 'docs/assets/src/**/*.js'], gulp.series('build:js'));
 	// Watch all docs src sass. Rebuild Sass on change.
 	gulp.watch(['docs/assets/src/**/*.scss'], gulp.series('build:sass'));
-	// Watch all docs src html. Rebuild html on change.
-	gulp.watch(['docs/views/**/*.html'], gulp.series('build:html'));
+	// Watch all docs src pug and markdown files. Rebuild HTML on change.
+	gulp.watch(['docs/views/**/*.pug', 'docs/content/**/*.+(md|json)'], gulp.series('build:html'));
 });
 
 /**

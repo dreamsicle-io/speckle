@@ -1,6 +1,6 @@
 {
   "name": "speckle-js",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A JavaScript module that adds responsive, stylized speckles to any element; with no dependencies.",
   "main": "dist/js/speckle.js",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dreamsiclemedia/speckle.git"
+    "url": "git+https://github.com/dreamsicle-io/speckle.git"
   },
   "keywords": [
     "javascript"
@@ -21,7 +21,7 @@
   "author": "Dreamsicle",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/dreamsiclemedia/speckle/issues"
+    "url": "https://github.com/dreamsicle-io/speckle/issues"
   },
   "homepage": "http://speckle.dreamsicle.io",
   "devDependencies": {

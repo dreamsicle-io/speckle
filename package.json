@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dreamsiclemedia/speckle.git"
+    "url": "git+https://github.com/dreamsicle-io/speckle.git"
   },
   "keywords": [
     "javascript"
@@ -21,7 +21,7 @@
   "author": "Dreamsicle",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/dreamsiclemedia/speckle/issues"
+    "url": "https://github.com/dreamsicle-io/speckle/issues"
   },
   "homepage": "http://speckle.dreamsicle.io",
   "devDependencies": {

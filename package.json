@@ -1,6 +1,6 @@
 {
   "name": "speckle-js",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A JavaScript module that adds responsive, stylized speckles to any element; with no dependencies.",
   "main": "dist/js/speckle.js",
   "scripts": {
